@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 
 namespace Organization {
+
+    /// <summary>
+    /// Структура реализующая сотрудника департамента
+    /// </summary>
     struct Employee {
 
         #region Constructors
@@ -13,14 +17,18 @@ namespace Organization {
         /// <param name="family">Фамилия сотрудника</param>
         /// <param name="sirname">Отчество сотрудника</param>
         /// <param name="birthDate">Дата рождения сотрудника</param>
-        public Employee(string name, string family, string sirname, DateTime birthDate, List<Project> lstProj) {
-            Id = ++Count_Emp;
+        /// <param name="position">Должность сотрудника</param>
+        /// <param name="lstProj">Список текущих проектов сотрудника</param>
+        public Employee(string name, string family, string sirname, DateTime birthDate, Position position, List<Project> lstProj) {
+            this.Id = ++Count_Emp;
             this.name_Emp = name;
             this.family_Emp = family;
             this.sirname_Emp = sirname;
             this.birthDate_Emp = birthDate;
+            this.position_Emp = position;
             this.currentProjects_Emp = lstProj;
         }
+
 
         /// <summary>
         /// Конструктор (2)
@@ -29,17 +37,18 @@ namespace Organization {
         /// <param name="family">Фамилия сотрудника</param>
         /// <param name="sirname">Отчество сотрудника</param>
         /// <param name="birthDate">Дата рождения сотрудника</param>
-        public Employee(string name, string family, string sirname, DateTime birthDate) :
-                        this(name, family, sirname, birthDate, new List<Project>()) {}
-
-        /// <summary>
-        /// Конструктор (3)
-        /// </summary>
-        /// <param name="name">Имя сотрудника</param>
-        /// <param name="family">Фамилия сотрудника</param>
-        /// <param name="birthDate">Дата рождения сотрудника</param>
-        public Employee(string name, string family, DateTime birthDate) :
-                            this(name, family, String.Empty, birthDate, new List<Project>()) {}
+        /// <param name="position">Должность сотрудника</param>
+        /// <param name="proj">Текущий проект сотрудника</param>
+        public Employee(string name, string family, string sirname, DateTime birthDate, Position position, Project proj) {
+            this.Id = ++Count_Emp;
+            this.name_Emp = name;
+            this.family_Emp = family;
+            this.sirname_Emp = sirname;
+            this.birthDate_Emp = birthDate;
+            this.position_Emp = position;
+            this.currentProjects_Emp = new List<Project>();
+            this.currentProjects_Emp.Add(proj);
+        }
 
         #endregion // Constructors
 
@@ -55,13 +64,13 @@ namespace Organization {
         /// </summary>
         /// <returns>Id, Family, Name, Sirname, BirthDate</returns>
         public string returnEmployeeInfo() {
-            return $"| { this.Id } | { this.Family } { this.Name } { this.Sirname } | { this.BirthDate.ToShortDateString() } г.р. | { this.CountProjects } |";
+            return $"| { this.Id } | { this.Family } { this.Name } { this.Sirname } | { this.BirthDate.ToShortDateString() } г.р. | { this.Post.Name } | { this.CountProjects } |";
         }
 
         #endregion // Methods
 
 
-        #region Property
+        #region Properties
         /// <summary>
         /// Идентификатор сотрудника
         /// </summary>
@@ -100,7 +109,7 @@ namespace Organization {
         }
 
         /// <summary>
-        /// Возраст
+        /// Возраст сотрудника
         /// </summary>
         public int Age {
             get {
@@ -110,13 +119,23 @@ namespace Organization {
             }
         }
 
+        /// <summary>
+        /// Количество текущих проектов сотрудника
+        /// </summary>
         public int CountProjects {
-            get {
-                return currentProjects_Emp.Count;
+            get { 
+                return this.currentProjects_Emp == null ? 0 : this.currentProjects_Emp.Count; 
             }
         }
 
-        #endregion // Property
+        /// <summary>
+        /// Должность сотрудника
+        /// </summary>
+        public Position Post {
+            get { return this.position_Emp; }
+        }
+
+        #endregion // Properties
 
 
         #region Fields
@@ -125,6 +144,7 @@ namespace Organization {
         private string family_Emp;                  // фамилия сотрудника
         private string sirname_Emp;                 // отчество сотрудника
         private DateTime birthDate_Emp;             // дата рождения сотрудника
+        private Position position_Emp;              // должность сотрудника
         private List<Project> currentProjects_Emp;  // текущие проекты сотрудника
 
         private static uint Count_Emp = 0;  // счетчик сотрудников для определения идентификатора сотрудника (Id)

@@ -1,6 +1,10 @@
 ﻿using System;
 
 namespace Organization {
+
+    /// <summary>
+    /// Структура реализующая проект
+    /// </summary>
     struct Project {
 
         #region Constructors
@@ -13,11 +17,11 @@ namespace Organization {
         /// <param name="dateEnd">Дата окончания проекта</param>
         /// <param name="description">Описание проекта</param>
         public Project(string name, DateTime dateBeg, DateTime dateEnd, string description) {
-            Id = ++Count_Proj;
-            Name = name;
-            Description = description;
-            dateBegin_Proj = dateBeg;
-            dateEnd_Proj = dateEnd;
+            this.Id = ++Count_Proj;
+            this.Name = name;
+            this.Description = description;
+            this.dateBegin_Proj = dateBeg;
+            this.dateEnd_Proj = dateEnd;
         }
 
         #endregion // Constructors
@@ -36,7 +40,7 @@ namespace Organization {
         #endregion // Methods
 
 
-        #region Property
+        #region Properties
 
         /// <summary>
         /// Идентификатор проекта
@@ -76,7 +80,7 @@ namespace Organization {
         /// </summary>
         public string Description { get; set; }
 
-        #endregion // Property
+        #endregion // Properties
 
 
         #region Fields
