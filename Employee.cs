@@ -30,9 +30,7 @@ namespace Organization {
         /// <param name="sirname">Отчество сотрудника</param>
         /// <param name="birthDate">Дата рождения сотрудника</param>
         public Employee(string name, string family, string sirname, DateTime birthDate) :
-                        this(name, family, sirname, birthDate, new List<Project>()) {
-            Id = ++Count_Emp;
-        }
+                        this(name, family, sirname, birthDate, new List<Project>()) {}
 
         /// <summary>
         /// Конструктор (3)
@@ -41,9 +39,7 @@ namespace Organization {
         /// <param name="family">Фамилия сотрудника</param>
         /// <param name="birthDate">Дата рождения сотрудника</param>
         public Employee(string name, string family, DateTime birthDate) :
-                            this(name, family, String.Empty, birthDate, new List<Project>()) {
-            Id = ++Count_Emp;
-        }
+                            this(name, family, String.Empty, birthDate, new List<Project>()) {}
 
         #endregion // Constructors
 
