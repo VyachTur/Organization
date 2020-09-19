@@ -41,7 +41,7 @@ namespace Organization {
         #region Methods
 
         public string returnDepartmentInfo() {
-            return $" { this.Id } { this.Name } { this.CountPositions } ";
+            return $"| { this.Id } | { this.Name } | { this.CountPositions } |";
         }
 
         #endregion // Methods
@@ -57,7 +57,6 @@ namespace Organization {
         public int CountPositions {
             get {
                 return this.positions == null ? 0 : this.positions.Count;
-                return this.positions.Count;
             }
         }
 
