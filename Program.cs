@@ -9,13 +9,16 @@ namespace Organization {
             //TitleAnimation("ОРГАНИЗАЦИЯ", ConsoleColor.DarkCyan); // анимация заголовка
             //Console.Clear();
 
-            // Вывод меню (создание примера организации)
-            //Menu();
+            // Вывод меню (+создание примера организации)
+            Menu();
 
-            // Создаем организацию
-            Organization organization = CreateStructureOrganization();
 
-            organization.printInfo();
+
+
+            //// Создаем организацию
+            //Organization organization = CreateStructureOrganization();
+
+            //organization.printInfo();
 
 
             //Console.WriteLine(organization.returnOrganizationInfo());
@@ -68,63 +71,68 @@ namespace Organization {
                 Console.Clear();
 
                 switch (choice) {
-                    case 1: // выбран пункт "Добавить запись"
+                    case 1: // выбран пункт "Добавить отдел в организацию"
 
 
                         continue;
 
-                    case 2: // выбран пункт "Редактировать запись"
+                    case 2: // выбран пункт "Добавить должность в отдел"
 
 
                         continue;
 
-                    case 3: // выбран пункт "Удалить запись"
+                    case 3: // выбран пункт "Добавить сотрудника в отдел"
 
                         
 
                         continue;
 
-                    case 5: // выбран пункт "Выгрузить данные в файл"
+                    case 4: // выбран пункт "Назначить сотрудника на должность"
 
 
                         continue;
 
-                    case 6: // выбран пункт "Упорядочить записи"
+                    case 5: // выбран пункт "Удалить сотрудника из отдела"
 
 
                         continue;
 
-                    case 7: // выбран пункт "Упорядочить записи"
+                    case 6: // выбран пункт "Упорядочить сотрудников в организации"
 
 
                         continue;
 
-                    case 8: // выбран пункт "Упорядочить записи"
+                    case 7: // выбран пункт "Вывод информации об организации"
+                        organization.printInfo();
+
+                        continue;
+
+                    case 8: // выбран пункт "Добавить новый проект"
 
 
                         continue;
 
-                    case 9: // выбран пункт "Упорядочить записи"
+                    case 9: // выбран пункт "Назначить проект сотруднику"
 
 
                         continue;
 
-                    case 10: // выбран пункт "Упорядочить записи"
+                    case 10: // выбран пункт "Импорт информации в xml"
 
 
                         continue;
 
-                    case 11: // выбран пункт "Упорядочить записи"
+                    case 11: // выбран пункт "Импорт информации в json"
 
 
                         continue;
 
-                    case 12: // выбран пункт "Упорядочить записи"
+                    case 12: // выбран пункт "Экспорт информации из xml"
 
 
                         continue;
 
-                    case 13: // выбран пункт "Упорядочить записи"
+                    case 13: // выбран пункт "Экспорт информации из json"
 
 
                         continue;
