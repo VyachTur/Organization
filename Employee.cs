@@ -50,21 +50,46 @@ namespace Organization {
             this.currentProjects_Emp.Add(proj);
         }
 
+
+        /// <summary>
+        /// Конструктор (2.1)
+        /// </summary>
+        /// <param name="name">Имя сотрудника</param>
+        /// <param name="family">Фамилия сотрудника</param>
+        /// <param name="sirname">Отчество сотрудника</param>
+        /// <param name="birthDate">Дата рождения сотрудника</param>
+        /// <param name="position">Должность сотрудника</param>
+        public Employee(string name, string family, string sirname, DateTime birthDate, Position position) :
+            this(name, family, sirname, birthDate, position, new Project()) { }
+
         #endregion // Constructors
 
 
         #region Methods
 
+        /// <summary>
+        /// Назначить проект сотруднику отдела
+        /// </summary>
+        /// <param name="proj">Проект</param>
         public void addProject(Project proj) {
             this.currentProjects_Emp.Add(proj);
         }
 
         /// <summary>
+        /// Получить список проектов сотрудника
+        /// </summary>
+        /// <returns>Список проектов сотрудника</returns>
+        public List<Project> returnProjects() {
+            return currentProjects_Emp;
+        }
+
+
+        /// <summary>
         /// Информация о сотруднике
         /// </summary>
-        /// <returns>Id, Family, Name, Sirname, BirthDate</returns>
+        /// <returns>String: Id, Family, Name, Sirname, BirthDate</returns>
         public string returnEmployeeInfo() {
-            return $"| { this.Id } | { this.Family } { this.Name } { this.Sirname } | { this.BirthDate.ToShortDateString() } г.р. | { this.Post.Name } | { this.CountProjects } |";
+            return $"| Идентификатор сотрудника: { this.Id } | ФИО сотрудника: { this.Family } { this.Name } { this.Sirname } | Дата рождения: { this.BirthDate.ToShortDateString() } г.р. | Должность: { this.Post.Name } | Количество текущих проектов: { this.CountProjects } |";
         }
 
         #endregion // Methods

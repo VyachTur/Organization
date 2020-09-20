@@ -29,11 +29,11 @@ namespace Organization {
         #region Methods
 
         /// <summary>
-        /// Информация по должности
+        /// Информация о должности
         /// </summary>
-        /// <returns></returns>
+        /// <returns>String: Id, Name, Salary</returns>
         public string returnPositionInfo() {
-            return $"| { this.Id } | { this.Name } | { this.Salary } |";
+            return $"| Идентификатор должности: { this.Id } | Наименование должности: { this.Name } | Зарплата: { this.Salary } |";
         }
 
         #endregion // Methods

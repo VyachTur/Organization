@@ -32,9 +32,9 @@ namespace Organization {
         /// <summary>
         /// Информация по проекту
         /// </summary>
-        /// <returns>Id, Name, DateBegin, DateEnd, Description</returns>
+        /// <returns>String: Id, Name, DateBegin, DateEnd, Description</returns>
         public string returnProjectInfo() {
-            return $"| { this.Id } | { this.Name } | { this.DateBegin.ToShortDateString() } | {this.DateEnd.ToShortDateString() } | {this.Description } |";
+            return $"| Идентификатор проекта: { this.Id } | Название проекта: { this.Name } | Дата начала: { this.DateBegin.ToShortDateString() } | Дата окончания: {this.DateEnd.ToShortDateString() } | Описание: {this.Description } |";
         }
 
         #endregion // Methods
