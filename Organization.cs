@@ -74,6 +74,30 @@ namespace Organization {
             return $"| Идентификатор организации: { this.Id } | Наименование организации: { this.Name } | Количество отделов: { this.CountDeparts } |";
         }
 
+
+        /// <summary>
+        /// Вывод подробной информации об организации на экран консоли
+        /// </summary>
+        public void printInfo() {
+            int i = 0;  // счетчик для вывода номера по порядку
+
+            Console.WriteLine($"| {"№", 2} | {"Имя", 10} | {"Фамилия", 15} | {"Возраст", 7} |" +
+                                $"{"Департамент", 20} | {"Оплата труда", 12} | {"Кол-во проектов", 15} |");
+
+            Console.WriteLine("------------------------------------------------------------------------------------------------------");
+
+            foreach (Department currDep in departs_Org) {
+                foreach (Employee currEmp in currDep.returnEmpls()) {
+
+                    Console.WriteLine($"| {++i, 2} | {currEmp.Name, 10} | {currEmp.Family, 15} | {currEmp.Age, 7} |" +
+                                $"{currDep.Name, 20} | {currEmp.Post.Salary, 12} | {currEmp.CountProjects, 15} |");
+
+                }
+            }
+        
+        
+        }
+
         #endregion // Methods
 
 

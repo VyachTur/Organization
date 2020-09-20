@@ -11,7 +11,7 @@ namespace Organization {
         #region Constructors
 
         /// <summary>
-        /// Конструктор (1)
+        /// Конструктор (1.1)
         /// </summary>
         /// <param name="name">Имя сотрудника</param>
         /// <param name="family">Фамилия сотрудника</param>
@@ -28,6 +28,17 @@ namespace Organization {
             this.position_Emp = position;
             this.currentProjects_Emp = lstProj;
         }
+
+        /// <summary>
+        /// Конструктор (1.2)
+        /// </summary>
+        /// <param name="name">Имя сотрудника</param>
+        /// <param name="family">Фамилия сотрудника</param>
+        /// <param name="sirname">Отчество сотрудника</param>
+        /// <param name="birthDate">Дата рождения сотрудника</param>
+        /// <param name="position">Должность сотрудника</param>
+        public Employee(string name, string family, string sirname, DateTime birthDate, Position position) :
+            this(name, family, sirname, birthDate, position, null) { }
 
 
         /// <summary>
@@ -50,18 +61,6 @@ namespace Organization {
             this.currentProjects_Emp.Add(proj);
         }
 
-
-        /// <summary>
-        /// Конструктор (2.1)
-        /// </summary>
-        /// <param name="name">Имя сотрудника</param>
-        /// <param name="family">Фамилия сотрудника</param>
-        /// <param name="sirname">Отчество сотрудника</param>
-        /// <param name="birthDate">Дата рождения сотрудника</param>
-        /// <param name="position">Должность сотрудника</param>
-        public Employee(string name, string family, string sirname, DateTime birthDate, Position position) :
-            this(name, family, sirname, birthDate, position, new Project()) { }
-
         #endregion // Constructors
 
 
@@ -72,6 +71,11 @@ namespace Organization {
         /// </summary>
         /// <param name="proj">Проект</param>
         public void addProject(Project proj) {
+            // Проверка наличия проектов у сотрудника
+            if (this.currentProjects_Emp == null) {
+                this.currentProjects_Emp = new List<Project>();
+            }
+
             this.currentProjects_Emp.Add(proj);
         }
 
@@ -80,7 +84,12 @@ namespace Organization {
         /// </summary>
         /// <returns>Список проектов сотрудника</returns>
         public List<Project> returnProjects() {
-            return currentProjects_Emp;
+            // Проверка наличия проектов у сотрудника
+            if (this.currentProjects_Emp == null) {
+                return new List<Project>();
+            }
+
+            return this.currentProjects_Emp;
         }
 
 

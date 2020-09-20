@@ -7,6 +7,7 @@ namespace Organization {
     /// Структура реализующая департамент (отдел)
     /// </summary>
     struct Department {
+        const int MaxEmployeesInDep = 1_000_000;    // максимальное количество сотрудников в одном департаменте (отделе)
 
         #region Constructors
 
@@ -18,9 +19,16 @@ namespace Organization {
         /// <param name="empls">Список сотрудников</param>
         public Department(string name, List<Position> posts, List<Employee> empls) {
             this.Id = ++Count_Dep;
+            this.CreateDate = DateTime.Now;
             this.Name = name;
             this.positions_Dep = posts;
-            this.employees_Dep = empls;
+
+            // Каждый департамент может состоять не более чем из 1_000_000 сотрудников!
+            if (empls.Count < MaxEmployeesInDep) {
+                this.employees_Dep = empls;
+            } else {
+                this.employees_Dep = null;
+            }
         }
 
         /// <summary>
@@ -38,6 +46,7 @@ namespace Organization {
         /// <param name="emp">Сотрудник департамента (отдела)</param>
         public Department(string name, Position post, Employee emp) {
             this.Id = ++Count_Dep;
+            this.CreateDate = DateTime.Now;
             this.Name = name;
 
             this.positions_Dep = new List<Position>();
@@ -64,6 +73,7 @@ namespace Organization {
         /// <param name="emp">Сотрудник департамента (отдела)</param>
         public Department(string name, List<Position> posts, Employee emp) {
             this.Id = ++Count_Dep;
+            this.CreateDate = DateTime.Now;
             this.Name = name;
 
             this.positions_Dep = posts;
@@ -100,7 +110,10 @@ namespace Organization {
         /// </summary>
         /// <param name="empl">Сотрудник</param>
         public void addEmpl(Employee empl) {
-            this.employees_Dep.Add(empl);
+            // Каждый департамент может состоять не более чем из 1_000_000 сотрудников!
+            if (employees_Dep.Count < MaxEmployeesInDep) {
+                this.employees_Dep.Add(empl);
+            }
         }
 
         /// <summary>
@@ -150,6 +163,8 @@ namespace Organization {
         /// Название отдела
         /// </summary>
         public string Name { get; set; }
+
+        public DateTime CreateDate { get; private set; }
 
         /// <summary>
         /// Количество должностей в отделе

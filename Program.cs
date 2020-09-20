@@ -7,10 +7,145 @@ namespace Organization {
         static void Main(string[] args) {
 
             //TitleAnimation("ОРГАНИЗАЦИЯ", ConsoleColor.DarkCyan); // анимация заголовка
+            //Console.Clear();
+
+            // Вывод меню (создание примера организации)
+            //Menu();
+
+            // Создаем организацию
+            Organization organization = CreateStructureOrganization();
+
+            organization.printInfo();
 
 
+            //Console.WriteLine(organization.returnOrganizationInfo());
+            //Console.WriteLine(organization.returnDeps()[0].returnDepartmentInfo());
+
+        }
+
+
+        /// <summary>
+        /// Вывод главного меню программы
+        /// </summary>
+        static public void Menu() {
+
+            // Создаем организацию
+            Organization organization = CreateStructureOrganization();
+
+            int choice = 0;
+
+            do {    // бесконечный цикл (до выхода пользователя из программы)
+
+                do {
+                    Console.Clear();
+                    Console.WriteLine("========================================================");
+                    Console.WriteLine("                    ГЛАВНОЕ МЕНЮ:");
+                    Console.WriteLine("========================================================");
+                    Console.WriteLine("1 - Добавить отдел в организацию;");
+                    Console.WriteLine("2 - Добавить должность в отдел;");
+                    Console.WriteLine("3 - Добавить сотрудника в отдел;");
+                    Console.WriteLine("4 - Назначить сотрудника на должность;");
+                    Console.WriteLine("5 - Удалить сотрудника из отдела;");
+                    Console.WriteLine("6 - Упорядочить сотрудников в организации;");
+                    Console.WriteLine("7 - Вывод информации об организации;");
+                    Console.WriteLine("========================================================");
+                    Console.WriteLine("8 - Добавить новый проект;");
+                    Console.WriteLine("9 - Назначить проект сотруднику;");
+                    Console.WriteLine("========================================================");
+                    Console.WriteLine("10 - Импорт информации в xml;");
+                    Console.WriteLine("11 - Импорт информации в json;");
+                    Console.WriteLine("12 - Экспорт информации из xml;");
+                    Console.WriteLine("13 - Экспорт информации из json;");
+                    Console.WriteLine("========================================================");
+                    Console.WriteLine("14 - Выйти из программы.");
+                    Console.WriteLine("========================================================");
+                    Console.WriteLine();
+
+                    Console.Write("Выберите пункт: ");
+                    int.TryParse(Console.ReadLine(), out choice);
+                } while (choice < 1 || choice > 14);
+
+                Console.Clear();
+
+                switch (choice) {
+                    case 1: // выбран пункт "Добавить запись"
+
+
+                        continue;
+
+                    case 2: // выбран пункт "Редактировать запись"
+
+
+                        continue;
+
+                    case 3: // выбран пункт "Удалить запись"
+
+                        
+
+                        continue;
+
+                    case 5: // выбран пункт "Выгрузить данные в файл"
+
+
+                        continue;
+
+                    case 6: // выбран пункт "Упорядочить записи"
+
+
+                        continue;
+
+                    case 7: // выбран пункт "Упорядочить записи"
+
+
+                        continue;
+
+                    case 8: // выбран пункт "Упорядочить записи"
+
+
+                        continue;
+
+                    case 9: // выбран пункт "Упорядочить записи"
+
+
+                        continue;
+
+                    case 10: // выбран пункт "Упорядочить записи"
+
+
+                        continue;
+
+                    case 11: // выбран пункт "Упорядочить записи"
+
+
+                        continue;
+
+                    case 12: // выбран пункт "Упорядочить записи"
+
+
+                        continue;
+
+                    case 13: // выбран пункт "Упорядочить записи"
+
+
+                        continue;
+
+                    case 14: // выбран пункт "Выйти"
+                        return;
+                }
+
+            } while (true);
+        }
+
+
+
+
+        /// <summary>
+        /// Создаем организацию (для проверки)
+        /// </summary>
+        /// <returns>Организация</returns>
+        static Organization CreateStructureOrganization() {
             // В организации 7 должностей
-            Position pos1 = new Position("Генеральный директор", 200000);
+            Position pos1 = new Position("Генеральный директор", 250000);
             Position pos2 = new Position("Менеджер", 90000);
             Position pos3 = new Position("Бухгалтер", 110000);
             Position pos4 = new Position("Ведущий инженер", 150000);
@@ -43,11 +178,11 @@ namespace Organization {
 
             // В организации 6 сотрудников
             Employee emp1 = new Employee("васиЛий", "пУпкИн", "петровиЧ", DateTime.Parse("01.07.1986"), pos1, prLst);
-            Employee emp2 = new Employee("Иванов", "иван", "иванович", DateTime.Parse("01.01.1985"), pos2, pr1);
-            Employee emp3 = new Employee("Бухгалтерова", "Вера", "Сергеевна", DateTime.Parse("21.01.1965"), pos3);
-            Employee emp4 = new Employee("Старший", "Сидр", "Сидорович", DateTime.Parse("24.05.1975"), pos5, prLst);
-            Employee emp5 = new Employee("Разов", "Иван", "Иванович", DateTime.Parse("01.01.1991"), pos6);
-            Employee emp6 = new Employee("Двоев", "Сергей", "Сергеевич", DateTime.Parse("02.02.1992"), pos7);
+            Employee emp2 = new Employee("Иван", "иванов", "иванович", DateTime.Parse("01.01.1985"), pos2, pr1);
+            Employee emp3 = new Employee("Вера", "Бухгалтерова", "Сергеевна", DateTime.Parse("21.01.1965"), pos3);
+            Employee emp4 = new Employee("Сидр", "Старший", "Сидорович", DateTime.Parse("24.05.1975"), pos5, prLst);
+            Employee emp5 = new Employee("Иван", "Разов", "Иванович", DateTime.Parse("01.01.1991"), pos6);
+            Employee emp6 = new Employee("Сергей", "Двоев", "Сергеевич", DateTime.Parse("02.02.1992"), pos7);
             emp5.addProject(pr1);
             emp5.addProject(pr2);
             emp6.addProject(pr3);
@@ -65,6 +200,7 @@ namespace Organization {
             // В организации 2 отдела
             Department depMng = new Department("Отдел управления", posLstMng, lstEmpMng);
             Department depJob = new Department("Отдел зарабатывания", posLstJob, lstEmpJob);
+            depMng.addPost(pos4);   // добавляем в "Отдел управления" должность "Ведущий инженер"
 
             List<Department> lstDeps = new List<Department>();
             lstDeps.Add(depMng);
@@ -73,14 +209,9 @@ namespace Organization {
             // Создание организации
             Organization organization = new Organization("ОРГАНИЗАЦИЯ", lstDeps);
 
-
-            //Console.WriteLine(organization.returnOrganizationInfo());
-            Console.WriteLine(organization.returnDeps()[0].returnDepartmentInfo());
-
-
-
+            // Возвращаем созданную организацию
+            return organization;
         }
-
 
 
         /// <summary>
@@ -97,11 +228,13 @@ namespace Organization {
             int posY = 0;  // смещение курсора по вертикали
 
             Console.ForegroundColor = fontColor;
+            Console.CursorVisible = false;
 
             if (logo.Length > 6) {
 
                 do {
 
+                    System.Threading.Thread.Sleep(50);
                     Console.Clear();
 
                     // Р
@@ -149,8 +282,6 @@ namespace Organization {
                     posX += 1;
                     posY += 1;
 
-                    System.Threading.Thread.Sleep(150);
-
                 } while (true);
 
             } else {
@@ -160,9 +291,10 @@ namespace Organization {
 
             Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
 
-            Console.ReadKey();
+            System.Threading.Thread.Sleep(2000);
 
             Console.ResetColor();
+            Console.CursorVisible = true;
 
         }
     }
