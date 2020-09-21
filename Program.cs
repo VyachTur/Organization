@@ -15,8 +15,24 @@ namespace Organization {
 
 
 
+
+
+
             //// Создаем организацию
             //Organization organization = CreateStructureOrganization();
+
+            //Console.WriteLine(organization.returnDepAtName("Отдел управления").returnDepartmentInfo());
+
+            //Department dep = new Department("Отдел торгашей");
+            //dep.addPost(new Position("Продавец", 50000));
+            //Console.WriteLine(dep.returnDepartmentInfo());
+
+            //dep.delPost(dep.returnPosts()[0]);
+
+            //Console.WriteLine(dep.returnDepartmentInfo());
+            //dep.delEmpl(new Employee());
+
+            //organization.addDepartment(dep);
 
             //organization.printInfo();
 
@@ -46,21 +62,20 @@ namespace Organization {
                     Console.WriteLine("========================================================");
                     Console.WriteLine("1 - Добавить отдел в организацию;");
                     Console.WriteLine("2 - Добавить должность в отдел;");
-                    Console.WriteLine("3 - Добавить сотрудника в отдел;");
-                    Console.WriteLine("4 - Назначить сотрудника на должность;");
-                    Console.WriteLine("5 - Удалить сотрудника из отдела;");
-                    Console.WriteLine("6 - Упорядочить сотрудников в организации;");
-                    Console.WriteLine("7 - Вывод информации об организации;");
+                    Console.WriteLine("3 - Добавить сотрудника и назначить на должность;");
+                    Console.WriteLine("4 - Удалить сотрудника из отдела;");
+                    Console.WriteLine("5 - Упорядочить сотрудников в организации;");
+                    Console.WriteLine("6 - Вывод информации об организации;");
                     Console.WriteLine("========================================================");
-                    Console.WriteLine("8 - Добавить новый проект;");
-                    Console.WriteLine("9 - Назначить проект сотруднику;");
+                    Console.WriteLine("7 - Добавить новый проект;");
+                    Console.WriteLine("8 - Назначить проект сотруднику;");
                     Console.WriteLine("========================================================");
-                    Console.WriteLine("10 - Импорт информации в xml;");
-                    Console.WriteLine("11 - Импорт информации в json;");
-                    Console.WriteLine("12 - Экспорт информации из xml;");
-                    Console.WriteLine("13 - Экспорт информации из json;");
+                    Console.WriteLine("9 - Импорт информации в xml;");
+                    Console.WriteLine("10 - Импорт информации в json;");
+                    Console.WriteLine("11 - Экспорт информации из xml;");
+                    Console.WriteLine("12 - Экспорт информации из json;");
                     Console.WriteLine("========================================================");
-                    Console.WriteLine("14 - Выйти из программы.");
+                    Console.WriteLine("13 - Выйти из программы.");
                     Console.WriteLine("========================================================");
                     Console.WriteLine();
 
@@ -72,72 +87,100 @@ namespace Organization {
 
                 switch (choice) {
                     case 1: // выбран пункт "Добавить отдел в организацию"
+                        string depName;
 
+                        Console.Write("Введите название департамента (отдела): ");
+                        depName = Console.ReadLine();
+
+
+                        organization.addDepartment(new Department(depName));
 
                         continue;
 
                     case 2: // выбран пункт "Добавить должность в отдел"
-
-
-                        continue;
-
-                    case 3: // выбран пункт "Добавить сотрудника в отдел"
-
+                        string depPostName;
+                        uint depPostSalary;
+                        int i = 1;
                         
+                        Console.Clear();
+
+                        //Console.WriteLine("Выберите отдел в который необходимо добавить новую должность: ");
+                        foreach (Department depTmp in organization.returnDeps()) {
+                            Console.WriteLine($"{depTmp.Name}");
+                        }
+
+                        Console.WriteLine();
+
+                        do {
+                            Console.Write("Введите наименование отдела в который необходимо добавить новую должность: ");
+                            depName = Console.ReadLine();
+                        } while (!organization.isIncludDep(depName));
+
+                        Console.WriteLine();
+                        Console.Write("Введите название новой должности в отделе: ");
+                        depPostName = Console.ReadLine();
+                        Console.Write($"Введите зарплату по должности \"{depPostName}\": ");
+                        uint.TryParse(Console.ReadLine(), out depPostSalary);
+
+                        organization.returnDepAtName(depName).addPost(new Position(depPostName, depPostSalary));
+
+                        Console.WriteLine();
 
                         continue;
 
-                    case 4: // выбран пункт "Назначить сотрудника на должность"
+                    case 3: // выбран пункт "Добавить сотрудника и назначить на должность"
+
+                        organization.returnDepAtName("Новый отдел")
+                            .addEmpl(new Employee("Новый", "Новый", "Новый", new DateTime(1995, 05, 05),
+                            new Position("Новая должность", 50000)));
+                        continue;
+
+                    case 4: // выбран пункт "Удалить сотрудника из отдела"
 
 
                         continue;
 
-                    case 5: // выбран пункт "Удалить сотрудника из отдела"
+                    case 5: // выбран пункт "Упорядочить сотрудников в организации"
 
 
                         continue;
 
-                    case 6: // выбран пункт "Упорядочить сотрудников в организации"
-
-
-                        continue;
-
-                    case 7: // выбран пункт "Вывод информации об организации"
+                    case 6: // выбран пункт "Вывод информации об организации"
                         organization.printInfo();
 
                         continue;
 
-                    case 8: // выбран пункт "Добавить новый проект"
+                    case 7: // выбран пункт "Добавить новый проект"
 
 
                         continue;
 
-                    case 9: // выбран пункт "Назначить проект сотруднику"
+                    case 8: // выбран пункт "Назначить проект сотруднику"
 
 
                         continue;
 
-                    case 10: // выбран пункт "Импорт информации в xml"
+                    case 9: // выбран пункт "Импорт информации в xml"
 
 
                         continue;
 
-                    case 11: // выбран пункт "Импорт информации в json"
+                    case 10: // выбран пункт "Импорт информации в json"
 
 
                         continue;
 
-                    case 12: // выбран пункт "Экспорт информации из xml"
+                    case 11: // выбран пункт "Экспорт информации из xml"
 
 
                         continue;
 
-                    case 13: // выбран пункт "Экспорт информации из json"
+                    case 12: // выбран пункт "Экспорт информации из json"
 
 
                         continue;
 
-                    case 14: // выбран пункт "Выйти"
+                    case 13: // выбран пункт "Выйти"
                         return;
                 }
 

@@ -38,8 +38,9 @@ namespace Organization {
         /// <param name="posts">Список должностей</param>
         public Department(string name, List<Position> posts) : this(name, posts, null) { }
 
+
         /// <summary>
-        /// Конструктор (2.1)
+        /// Конструктор (2)
         /// </summary>
         /// <param name="name">Название департамента (отдела)</param>
         /// <param name="post">Должность в департаменте (отделе)</param>
@@ -56,17 +57,41 @@ namespace Organization {
             this.employees_Dep.Add(emp);
         }
 
-        /// <summary>
-        /// Конструктор (2.2)
-        /// </summary>
-        /// <param name="name">Название департамента (отдела)</param>
-        /// <param name="post">Должность в департаменте (отделе)</param>
-        public Department(string name, Position post) : this(name, post, new Employee()) { }
-
-
 
         /// <summary>
         /// Конструктор (3)
+        /// </summary>
+        /// <param name="name">Название департамента (отдела)</param>
+        /// <param name="post">Должность в департаменте (отделе)</param>
+        public Department(string name, Position post) {
+            this.Id = ++Count_Dep;
+            this.CreateDate = DateTime.Now;
+            this.Name = name;
+
+            this.positions_Dep = new List<Position>();
+            this.positions_Dep.Add(post);
+
+            this.employees_Dep = null;
+        }
+
+
+        /// <summary>
+        /// Конструктор (4)
+        /// </summary>
+        /// <param name="name">Название департамента (отдела)</param>
+        public Department(string name) {
+            this.Id = ++Count_Dep;
+            this.CreateDate = DateTime.Now;
+            this.Name = name;
+
+            this.positions_Dep = null;
+
+            this.employees_Dep = null;
+        }
+
+
+        /// <summary>
+        /// Конструктор (5)
         /// </summary>
         /// <param name="name">Название департамента (отдела)</param>
         /// <param name="posts">Список должностей в департаменте (отделе)</param>
@@ -93,6 +118,10 @@ namespace Organization {
         /// </summary>
         /// <param name="post">Должность</param>
         public void addPost(Position post) {
+            if (this.positions_Dep == null) {
+                this.positions_Dep = new List<Position>();
+            }
+
             this.positions_Dep.Add(post);
         }
 
@@ -101,8 +130,10 @@ namespace Organization {
         /// </summary>
         /// <param name="post">Должность</param>
         public void delPost(Position post) {
-            // Если элемент есть в списке, то удаляем его
-            if (this.positions_Dep.Contains(post)) this.positions_Dep.Remove(post);
+            if (this.positions_Dep != null) {
+                // Если элемент есть в списке, то удаляем его
+                if (this.positions_Dep.Contains(post)) this.positions_Dep.Remove(post);
+            }
         }
 
         /// <summary>
@@ -110,6 +141,10 @@ namespace Organization {
         /// </summary>
         /// <param name="empl">Сотрудник</param>
         public void addEmpl(Employee empl) {
+            if (this.employees_Dep == null) {
+                this.employees_Dep = new List<Employee>();
+            }
+
             // Каждый департамент может состоять не более чем из 1_000_000 сотрудников!
             if (employees_Dep.Count < MaxEmployeesInDep) {
                 this.employees_Dep.Add(empl);
@@ -121,7 +156,9 @@ namespace Organization {
         /// </summary>
         /// <param name="empl">Сотрудник</param>
         public void delEmpl(Employee empl) {
-            if (this.employees_Dep.Contains(empl)) this.employees_Dep.Remove(empl);
+            if (this.employees_Dep != null) {
+                if (this.employees_Dep.Contains(empl)) this.employees_Dep.Remove(empl);
+            }
         }
 
         /// <summary>
@@ -129,6 +166,10 @@ namespace Organization {
         /// </summary>
         /// <returns>Список должностей</returns>
         public List<Position> returnPosts() {
+            if (this.positions_Dep == null) {
+                return new List<Position>();
+            }
+
             return this.positions_Dep;
         }
 
@@ -137,6 +178,10 @@ namespace Organization {
         /// </summary>
         /// <returns>Список сотрудников</returns>
         public List<Employee> returnEmpls() {
+            if (this.employees_Dep == null) {
+                return new List<Employee>();
+            }
+
             return this.employees_Dep;
         }
 

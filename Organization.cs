@@ -45,6 +45,10 @@ namespace Organization {
         /// </summary>
         /// <param name="dep">Отдел</param>
         public void addDepartment(Department dep) {
+            if (this.departs_Org == null) {
+                this.departs_Org = new List<Department>();
+            }
+
             this.departs_Org.Add(dep);
         }
 
@@ -53,8 +57,10 @@ namespace Organization {
         /// </summary>
         /// <param name="dep">Отдел</param>
         public void delDepartment(Department dep) {
-            // Если элемент есть в списке, то удаляем его
-            if (this.departs_Org.Contains(dep)) this.departs_Org.Remove(dep);
+            if (this.departs_Org != null) {
+                // Если элемент есть в списке, то удаляем его
+                if (this.departs_Org.Contains(dep)) this.departs_Org.Remove(dep);
+            }
         }
 
         /// <summary>
@@ -62,8 +68,34 @@ namespace Organization {
         /// </summary>
         /// <returns>Список отделов</returns>
         public List<Department> returnDeps() {
-            return this.departs_Org;
+            if (this.departs_Org == null) {
+                return new List<Department>();
+            }
 
+            return this.departs_Org;
+        }
+
+        /// <summary>
+        /// Возвращает отдел по его наименованию
+        /// </summary>
+        /// <param name="nameDep">Отдел (Department)</param>
+        /// <returns></returns>
+        public Department returnDepAtName(string nameDep) {
+            //myList.Find((item) => return item.Id = idValue);
+            return this.returnDeps().Find((item) => item.Name == nameDep);
+        }
+
+        /// <summary>
+        /// Проверяет, существует ли отдел в организации (если существует, возвр. true, иначе false)
+        /// </summary>
+        /// <param name="nameDep">Имя проверяемого департамента</param>
+        /// <returns></returns>
+        public bool isIncludDep(string nameDep) {
+            foreach (Department dep in this.departs_Org) {
+                if (dep.Name == nameDep) return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -86,6 +118,7 @@ namespace Organization {
 
             Console.WriteLine("------------------------------------------------------------------------------------------------------");
 
+            // Информация выводится по сотрудникам в организации (пустые отделы и должности не выводятся)
             foreach (Department currDep in departs_Org) {
                 foreach (Employee currEmp in currDep.returnEmpls()) {
 
