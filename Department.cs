@@ -6,7 +6,7 @@ namespace Organization {
     /// <summary>
     /// Структура реализующая департамент (отдел)
     /// </summary>
-    struct Department {
+    class Department {
         const int MaxEmployeesInDep = 1_000_000;    // максимальное количество сотрудников в одном департаменте (отделе)
 
         #region Constructors
@@ -36,7 +36,7 @@ namespace Organization {
         /// </summary>
         /// <param name="name">Название департамента (отдела)</param>
         /// <param name="posts">Список должностей</param>
-        public Department(string name, List<Position> posts) : this(name, posts, null) { }
+        //public Department(string name, List<Position> posts) : this(name, posts, null) { }
 
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Organization {
         /// Сокращение должности в отделе
         /// </summary>
         /// <param name="post">Должность</param>
-        public void delPost(Position post) {
+        public void delPost(ref Position post) {
             if (this.positions_Dep != null) {
                 // Если элемент есть в списке, то удаляем его
                 if (this.positions_Dep.Contains(post)) this.positions_Dep.Remove(post);
@@ -174,6 +174,15 @@ namespace Organization {
         }
 
         /// <summary>
+        /// Возвращает должность по её названию
+        /// </summary>
+        /// <param name="namePost"></param>
+        /// <returns></returns>
+        public Position returnPostAtName(string namePost) {
+            return this.positions_Dep.Find((item) => item.Name == namePost);
+        }
+
+        /// <summary>
         /// Возвращает список сотрудников в отделе
         /// </summary>
         /// <returns>Список сотрудников</returns>
@@ -184,6 +193,16 @@ namespace Organization {
 
             return this.employees_Dep;
         }
+
+        /// <summary>
+        /// Возвращает сотрудника по его идентификатору
+        /// </summary>
+        /// <param name="namePost"></param>
+        /// <returns></returns>
+        public Position returnEmplAtName(string nameEmpl) {
+            return this.positions_Dep.Find((item) => item.Name == nameEmpl);
+        }
+
 
         /// <summary>
         /// Информация об отделе

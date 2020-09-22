@@ -6,7 +6,7 @@ namespace Organization {
     /// <summary>
     /// Структура реализующая организацию
     /// </summary>
-    struct Organization {
+    class Organization {
 
         #region Constructors
 
@@ -81,8 +81,7 @@ namespace Organization {
         /// <param name="nameDep">Отдел (Department)</param>
         /// <returns></returns>
         public Department returnDepAtName(string nameDep) {
-            //myList.Find((item) => return item.Id = idValue);
-            return this.returnDeps().Find((item) => item.Name == nameDep);
+            return this.departs_Org.Find((item) => item.Name == nameDep);
         }
 
         /// <summary>

@@ -122,17 +122,22 @@ namespace Organization {
                         Console.Write($"Введите зарплату по должности \"{depPostName}\": ");
                         uint.TryParse(Console.ReadLine(), out depPostSalary);
 
+                        //Console.WriteLine(organization.returnOrganizationInfo());
                         organization.returnDepAtName(depName).addPost(new Position(depPostName, depPostSalary));
-
-                        Console.WriteLine();
+                        //Console.WriteLine(organization.returnOrganizationInfo());
+                        //Console.WriteLine();
+                        //Console.ReadKey();
 
                         continue;
 
                     case 3: // выбран пункт "Добавить сотрудника и назначить на должность"
 
-                        organization.returnDepAtName("Новый отдел")
+                        organization.returnDepAtName("новый")
                             .addEmpl(new Employee("Новый", "Новый", "Новый", new DateTime(1995, 05, 05),
-                            new Position("Новая должность", 50000)));
+                            organization.returnDepAtName("новый").returnPostAtName("новая")));
+
+
+
                         continue;
 
                     case 4: // выбран пункт "Удалить сотрудника из отдела"
