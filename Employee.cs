@@ -6,7 +6,7 @@ namespace Organization {
     /// <summary>
     /// Структура реализующая сотрудника департамента
     /// </summary>
-    struct Employee {
+    class Employee {
 
         #region Constructors
 

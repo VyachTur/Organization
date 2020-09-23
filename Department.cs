@@ -176,10 +176,10 @@ namespace Organization {
         /// <summary>
         /// Возвращает должность по её названию
         /// </summary>
-        /// <param name="namePost"></param>
+        /// <param name="idPost">Идентификатор должности</param>
         /// <returns></returns>
-        public Position returnPostAtName(string namePost) {
-            return this.positions_Dep.Find((item) => item.Name == namePost);
+        public Position returnPostAtId(uint idPost) {
+            return this.positions_Dep.Find((item) => item.Id == idPost);
         }
 
         /// <summary>
@@ -197,10 +197,56 @@ namespace Organization {
         /// <summary>
         /// Возвращает сотрудника по его идентификатору
         /// </summary>
-        /// <param name="namePost"></param>
+        /// <param name="idEmpl">Идентификатор сотрудника отдела</param>
         /// <returns></returns>
-        public Position returnEmplAtName(string nameEmpl) {
-            return this.positions_Dep.Find((item) => item.Name == nameEmpl);
+        public Employee returnEmplAtId(uint idEmpl) {
+            return this.employees_Dep.Find((item) => item.Id == idEmpl);
+        }
+
+        /// <summary>
+        /// Возвращает информацию о вакантных должностях
+        /// </summary>
+        /// <returns>Строка с информацией о вакантах</returns>
+        public string returnVacant() {
+            string outputStr = null;   // возвращаемая строка с информацией о вакантных должностях
+            bool trigger = false;   // "попалась" ли должность среди должностей сотрудников
+
+            foreach (Position pos in positions_Dep) {
+                if (employees_Dep != null) {
+                    foreach (Employee emp in employees_Dep) {
+                        // Если сотрудник с такой должностью есть, то переходи к следующей должности
+                        if (pos.Id == emp.Post.Id) {
+                            trigger = true; // сотрудник на должности пропускаем
+                            break;
+                        }
+                    }
+                }
+
+                // Если прошли цикл и не нашли должность среди сотрудников, то выводим информацию о вакантной должности
+                if (!trigger) outputStr += pos.returnPositionInfo() + '\n';
+                trigger = false;
+            }
+
+            return outputStr;
+        }
+
+        /// <summary>
+        /// Проверяет, существует ли должность в отделе и вакантна ли она
+        /// </summary>
+        /// <param name="id">Идентификатор проверяемой должности</param>
+        /// <returns></returns>
+        public bool isIncludAndVacant(uint idPost) {
+            foreach (Position pos in positions_Dep) {
+                if (employees_Dep != null) {
+                    foreach (Employee emp in employees_Dep) {
+                        if (emp.Post.Id == idPost) return false;    // должность существует и занята
+                    }
+                }
+
+                if (pos.Id == idPost) return true;  // должность существует и не занята
+            }
+
+            return false;
         }
 
 
