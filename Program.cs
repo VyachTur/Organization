@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -16,45 +18,10 @@ namespace Organization {
 
 
 
-
             //// Создаем организацию
             //Organization organization = CreateStructureOrganization();
 
             //organization.printSortedEmployees(FIELDSORT.AGE);
-
-
-
-
-
-
-            //foreach (var dep in organization.returnDeps()) {
-            //    foreach (var emp in dep.returnEmpls()) {
-            //        Console.WriteLine(emp.Dep.Name);
-            //    }
-            //}
-
-            //organization.addDepartment(new Department("новый"));
-            //organization.returnDepAtName("новый").addPost(new Position("новая", 50));
-
-
-            //Console.WriteLine(organization.returnDepAtName("Отдел управления").returnDepartmentInfo());
-
-            //Department dep = new Department("Отдел торгашей");
-            //dep.addPost(new Position("Продавец", 50000));
-            //Console.WriteLine(dep.returnDepartmentInfo());
-
-            //dep.delPost(dep.returnPosts()[0]);
-
-            //Console.WriteLine(dep.returnDepartmentInfo());
-            //dep.delEmpl(new Employee());
-
-            //organization.addDepartment(dep);
-
-            //organization.printInfo();
-
-
-            //Console.WriteLine(organization.returnOrganizationInfo());
-            //Console.WriteLine(organization.returnDeps()[0].returnDepartmentInfo());
 
         }
 
@@ -320,7 +287,19 @@ namespace Organization {
 
                     case 8: // выбран пункт "Импорт информации в xml"
 
+                        //Project proj = new Project("Проект", DateTime.Now, DateTime.Now.AddDays(5), "Описание");
 
+                        //// Создаем сериализатор на основе указанного типа 
+                        //XmlSerializer xmlSerializer = new XmlSerializer(typeof(Organization));
+
+                        //// Создаем поток для сохранения данных
+                        //Stream fStream = new FileStream("organization.xml", FileMode.Create, FileAccess.Write);
+
+                        //// Запускаем процесс сериализации
+                        //xmlSerializer.Serialize(fStream, organization);
+
+                        //// Закрываем поток
+                        //fStream.Close();
 
                         continue;
 

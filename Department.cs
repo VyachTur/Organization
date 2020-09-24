@@ -6,7 +6,7 @@ namespace Organization {
     /// <summary>
     /// Структура реализующая департамент (отдел)
     /// </summary>
-    class Department {
+    public class Department {
         const int MaxEmployeesInDep = 1_000_000;    // максимальное количество сотрудников в одном департаменте (отделе)
 
         #region Constructors

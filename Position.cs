@@ -7,7 +7,7 @@ namespace Organization {
     /// <summary>
     /// Структура реализующая должность в департаменте
     /// </summary>
-    struct Position {
+    public struct Position {
 
         #region Constructors
 

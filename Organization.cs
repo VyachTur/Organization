@@ -7,7 +7,7 @@ namespace Organization {
     /// <summary>
     /// Поля для сортировки
     /// </summary>
-    enum FIELDSORT {
+    public enum FIELDSORT {
         ID = 1,         // для сортировки по идентификатору сотрудника
         DEP,            // для сортировки по департаменту (отделу)
         AGE,            // для сортировки по возрасту
@@ -18,9 +18,14 @@ namespace Organization {
     /// <summary>
     /// Структура реализующая организацию
     /// </summary>
-    class Organization {
+    public class Organization {
 
         #region Constructors
+
+        //public Organization() {
+        //    this.Id = 0;
+        //    this.Name = String.Empty;
+        //}
 
         /// <summary>
         /// Конструктор (1)

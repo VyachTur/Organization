@@ -5,7 +5,7 @@ namespace Organization {
     /// <summary>
     /// Структура реализующая проект
     /// </summary>
-    struct Project {
+    public struct Project {
 
         #region Constructors
 
