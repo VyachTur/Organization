@@ -1,7 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Organization {
+
+    /// <summary>
+    /// Поля для сортировки
+    /// </summary>
+    enum FIELDSORT {
+        ID = 1,         // для сортировки по идентификатору сотрудника
+        DEP,            // для сортировки по департаменту (отделу)
+        AGE,            // для сортировки по возрасту
+        AGE_SALARY,     // для сортировки по возрасту и зарплате
+        DEP_AGE_SALARY  // для сортировки по возрасту и зарплате в рамках одного департамента
+    }
 
     /// <summary>
     /// Структура реализующая организацию
@@ -110,19 +122,17 @@ namespace Organization {
         /// Вывод подробной информации об организации на экран консоли
         /// </summary>
         public void printInfo() {
-            int i = 0;  // счетчик для вывода номера по порядку
-
-            Console.WriteLine($"| {"№", 2} | {"Имя", 10} | {"Фамилия", 15} | {"Возраст", 7} |" +
+            Console.WriteLine($"| {"Id", 2} | {"Имя", 10} | {"Фамилия", 15} | {"Возраст", 7} |" +
                                 $"{"Департамент", 20} | {"Оплата труда", 12} | {"Кол-во проектов", 15} |");
 
             Console.WriteLine("------------------------------------------------------------------------------------------------------");
 
             // Информация выводится по сотрудникам в организации (пустые отделы и должности не выводятся)
-            foreach (Department currDep in departs_Org) {
+            foreach (Department currDep in this.departs_Org) {
                 foreach (Employee currEmp in currDep.returnEmpls()) {
 
-                    Console.WriteLine($"| {++i, 2} | {currEmp.Name, 10} | {currEmp.Family, 15} | {currEmp.Age, 7} |" +
-                                $"{currDep.Name, 20} | {currEmp.Post.Salary, 12} | {currEmp.CountProjects, 15} |");
+                    Console.WriteLine($"| {currEmp.Id, 2} | {currEmp.Name, 10} | {currEmp.Family, 15} | {currEmp.Age, 7} |" +
+                                $"{currEmp.Dep.Name, 20} | {currEmp.Post.Salary, 12} | {currEmp.CountProjects, 15} |");
 
                 }
             }
@@ -130,6 +140,88 @@ namespace Organization {
             Console.ReadKey();
         }
 
+
+        //////////////////////////////////////СОРТИРОВКА//////////////////////////////////////////////
+
+        /// <summary>
+        /// Сортирует сотрудников в организации по различным критериям (3 критерия)
+        /// </summary>
+        /// <param name="critSort">Критерии сортировки: FIELDSORT.ID - по идентификатору сотрудника,
+        ///                                             FIELDSORT.DEP - по департаменту (отделу),
+        ///                                             FIELDSORT.AGE - по возрасту,
+        ///                                             FIELDSORT.AGE_SALARY - по возрасту и зарплате,
+        ///                                             FIELDSORT.DEP_AGE_SALARY - по возр. и зп. в рамках одного деп.</param>
+        /// <returns>Лист сотрудников, отсортированных по выбранному критерию</returns>
+        public List<Employee> getSortEmployees(FIELDSORT critSort = FIELDSORT.ID) {
+            List<Employee> lstEmp = new List<Employee>();
+
+            foreach (Department currDep in this.departs_Org) {
+                lstEmp.AddRange(currDep.returnEmpls());
+            }
+
+            
+            switch (critSort) {
+                case FIELDSORT.ID:
+                    // Сортируем всех сотрудников по идентификатору
+                    List<Employee> sortedById =
+                            lstEmp.OrderBy(i => i.Id).ToList();
+
+                    return sortedById;
+
+                case FIELDSORT.DEP:
+                    // Сортируем всех сотрудников по департаменту
+                    List<Employee> sortedByDep =
+                            lstEmp.OrderBy(d => d.Dep.Name).ToList();
+
+                    return sortedByDep;
+
+                case FIELDSORT.AGE:
+                    // Сортируем всех сотрудников по возрасту
+                    List<Employee> sortedByAge =
+                            lstEmp.OrderBy(a => a.Age).ToList();
+                    
+                    return sortedByAge;
+
+                case FIELDSORT.AGE_SALARY:
+                    // Сортируем всех сотрудников по возрасту и зарплате
+                    List<Employee> sortedByAgeSal =
+                            lstEmp.OrderBy(a => a.Age).ThenBy(s => s.Post.Salary).ToList();
+
+                    return sortedByAgeSal;
+
+                case FIELDSORT.DEP_AGE_SALARY:
+                    // Сортируем сотрудников в рамках одного отдела по возрасту и зарплате
+                    List<Employee> sortedByDepAgeSal =
+                            lstEmp.OrderBy(d => d.Dep.Name).ThenBy(a => a.Age).ThenBy(s => s.Post.Salary).ToList();
+
+                    return sortedByDepAgeSal;
+
+            }
+
+            return lstEmp;
+        }
+
+        /// <summary>
+        /// Вывод на экран консоли отсортированного списка сотрудников организации
+        /// </summary>
+        /// <param name="critSort">Критерий сортировки</param>
+        public void printSortedEmployees(FIELDSORT critSort = FIELDSORT.ID) {
+            Console.WriteLine($"| {"Id",2} | {"Имя",10} | {"Фамилия",15} | {"Возраст",7} |" +
+                                $"{"Департамент",20} | {"Оплата труда",12} | {"Кол-во проектов",15} |");
+
+            Console.WriteLine("------------------------------------------------------------------------------------------------------");
+
+            foreach (Employee emp in this.getSortEmployees(critSort)) {
+                Console.WriteLine($"| {emp.Id,2} | {emp.Name,10} | {emp.Family,15} | {emp.Age,7} |" +
+                                $"{emp.Dep.Name,20} | {emp.Post.Salary,12} | {emp.CountProjects,15} |");
+
+            }
+
+            Console.ReadKey();
+        }
+
+        ///////////////////////////////////КОНЕЦ_СОРТИРОВКА////////////////////////////////////////////
+        ///
 
 
 

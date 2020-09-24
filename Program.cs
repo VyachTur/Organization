@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace Organization {
     class Program {
@@ -15,11 +17,21 @@ namespace Organization {
 
 
 
-
-
-
             //// Создаем организацию
             //Organization organization = CreateStructureOrganization();
+
+            //organization.printSortedEmployees(FIELDSORT.AGE);
+
+
+
+
+
+
+            //foreach (var dep in organization.returnDeps()) {
+            //    foreach (var emp in dep.returnEmpls()) {
+            //        Console.WriteLine(emp.Dep.Name);
+            //    }
+            //}
 
             //organization.addDepartment(new Department("новый"));
             //organization.returnDepAtName("новый").addPost(new Position("новая", 50));
@@ -68,7 +80,7 @@ namespace Organization {
                     Console.WriteLine("2 - Добавить должность в отдел;");
                     Console.WriteLine("3 - Добавить сотрудника и назначить на должность;");
                     Console.WriteLine("4 - Удалить сотрудника из отдела;");
-                    Console.WriteLine("5 - Упорядочить сотрудников в организации;");
+                    Console.WriteLine("5 - Вывести упорядоченный список сотрудников организации;");
                     Console.WriteLine("6 - Добавить новый проект для сотрудника;");
                     Console.WriteLine("7 - Вывод информации об организации;");
                     Console.WriteLine("========================================================");
@@ -205,9 +217,54 @@ namespace Organization {
 
                         continue;
 
-                    case 5: // выбран пункт "Упорядочить сотрудников в организации"
+                    case 5: // выбран пункт "Вывести упорядоченный список сотрудников организации"
 
+                        do {
+                            Console.Clear();
+                            Console.WriteLine("==========================================================");
+                            Console.WriteLine("                  КРИТЕРИЙ СОРТИРОВКИ: ");
+                            Console.WriteLine("==========================================================");
+                            Console.WriteLine("1 - По возрасту;");
+                            Console.WriteLine("2 - По возрасту и зарплате;");
+                            Console.WriteLine("3 - По возрасту и зарплате (в рамках одного департамента);");
+                            Console.WriteLine("4 - По идентификатору сотрудника;");
+                            Console.WriteLine("==========================================================");
+                            Console.WriteLine("5 - В главное меню.");
+                            Console.WriteLine("==========================================================");
 
+                            Console.WriteLine();
+                            Console.Write("Выберите пункт: ");
+                            int.TryParse(Console.ReadLine(), out choice);
+                        } while (choice < 1 || choice > 5);
+
+                        Console.Clear();
+
+                        switch (choice) {
+                            case 1:
+                                organization.printSortedEmployees(FIELDSORT.AGE);
+
+                                break;
+
+                            case 2:
+                                organization.printSortedEmployees(FIELDSORT.AGE_SALARY);
+
+                                break;
+
+                            case 3:
+                                organization.printSortedEmployees(FIELDSORT.DEP_AGE_SALARY);
+
+                                break;
+
+                            case 4:
+                                organization.printSortedEmployees(FIELDSORT.ID);
+
+                                break;
+
+                            case 5:
+
+                                continue;
+
+                        }
 
                         continue;
 
@@ -302,8 +359,11 @@ namespace Organization {
             Position pos3 = new Position("Бухгалтер", 110000);
             Position pos4 = new Position("Ведущий инженер", 150000);
             Position pos5 = new Position("Старший программист", 140000);
-            Position pos6 = new Position("Программист", 120000);
+            Position pos6 = new Position("Программист", 110000);
             Position pos7 = new Position("Программист", 120000);
+            Position pos8 = new Position("Программист", 130000);
+            Position pos9 = new Position("Стажер", 10000);
+            Position pos10 = new Position("Стажер", 10500);
 
             List<Position> posLstMng = new List<Position>();
             posLstMng.Add(pos1);
@@ -315,6 +375,9 @@ namespace Organization {
             posLstJob.Add(pos5);
             posLstJob.Add(pos6);
             posLstJob.Add(pos7);
+            posLstJob.Add(pos8);
+            posLstJob.Add(pos9);
+            posLstJob.Add(pos10);
 
 
             // В организации 3 проекта
@@ -329,12 +392,14 @@ namespace Organization {
 
 
             // В организации 6 сотрудников
-            Employee emp1 = new Employee("васиЛий", "пУпкИн", "петровиЧ", DateTime.Parse("01.07.1986"), pos1, prLst);
+            Employee emp1 = new Employee("васиЛий", "пУпкИн", "петровиЧ", DateTime.Parse("01.07.1971"), pos1, prLst);
             Employee emp2 = new Employee("Иван", "иванов", "иванович", DateTime.Parse("01.01.1985"), pos2, pr1);
             Employee emp3 = new Employee("Вера", "Бухгалтерова", "Сергеевна", DateTime.Parse("21.01.1965"), pos3);
             Employee emp4 = new Employee("Сидр", "Старший", "Сидорович", DateTime.Parse("24.05.1975"), pos5, prLst);
             Employee emp5 = new Employee("Иван", "Разов", "Иванович", DateTime.Parse("01.01.1991"), pos6);
-            Employee emp6 = new Employee("Сергей", "Двоев", "Сергеевич", DateTime.Parse("02.02.1992"), pos7);
+            Employee emp6 = new Employee("Сергей", "Двоев", "Сергеевич", DateTime.Parse("02.01.1991"), pos7);
+            Employee emp7 = new Employee("Стажеркин", "Геннадий", "Геннадьевич", DateTime.Parse("15.05.2000"), pos9);
+
             emp5.addProject(pr1);
             emp5.addProject(pr2);
             emp6.addProject(pr3);
@@ -348,6 +413,7 @@ namespace Organization {
             lstEmpJob.Add(emp4);
             lstEmpJob.Add(emp5);
             lstEmpJob.Add(emp6);
+            lstEmpJob.Add(emp7);
 
             // В организации 2 отдела
             Department depMng = new Department("Отдел управления", posLstMng, lstEmpMng);

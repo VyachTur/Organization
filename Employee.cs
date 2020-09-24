@@ -169,6 +169,11 @@ namespace Organization {
             get { return this.position_Emp; }
         }
 
+        /// <summary>
+        /// Департамент (отдел) в котором работает сотрудник
+        /// </summary>
+        public Department Dep { get; set; }
+
         #endregion // Properties
 
 
@@ -180,6 +185,7 @@ namespace Organization {
         private DateTime birthDate_Emp;             // дата рождения сотрудника
         private Position position_Emp;              // должность сотрудника
         private List<Project> currentProjects_Emp;  // текущие проекты сотрудника
+        //private Department departament_Emp;         // департамент (отдел) в котором работает сотрудник
 
         private static uint Count_Emp = 0;  // счетчик сотрудников для определения идентификатора сотрудника (Id)
 

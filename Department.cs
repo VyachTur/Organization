@@ -25,6 +25,9 @@ namespace Organization {
 
             // Каждый департамент может состоять не более чем из 1_000_000 сотрудников!
             if (empls.Count < MaxEmployeesInDep) {
+                foreach (Employee emp in empls) {
+                    emp.Dep = this;
+                }
                 this.employees_Dep = empls;
             } else {
                 this.employees_Dep = null;
@@ -54,6 +57,7 @@ namespace Organization {
             this.positions_Dep.Add(post);
 
             this.employees_Dep = new List<Employee>();
+            emp.Dep = this;
             this.employees_Dep.Add(emp);
         }
 
@@ -104,6 +108,7 @@ namespace Organization {
             this.positions_Dep = posts;
 
             this.employees_Dep = new List<Employee>();
+            emp.Dep = this;
             this.employees_Dep.Add(emp);
         }
 
@@ -148,6 +153,7 @@ namespace Organization {
             // Каждый департамент может состоять не более чем из 1_000_000 сотрудников!
             if (employees_Dep.Count < MaxEmployeesInDep) {
                 this.employees_Dep.Add(empl);
+                empl.Dep = this;
             }
         }
 
