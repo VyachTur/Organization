@@ -32,7 +32,7 @@ namespace Organization {
         /// Информация о должности
         /// </summary>
         /// <returns>String: Id, Name, Salary</returns>
-        public string returnPositionInfo() {
+        public override string ToString() {
             return $"| Идентификатор должности: { this.Id } | Наименование должности: { this.Name } | Зарплата: { this.Salary } |";
         }
 

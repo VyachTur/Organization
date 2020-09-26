@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
 namespace Organization {
@@ -23,8 +24,11 @@ namespace Organization {
 
         #region Constructors
 
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
         public Organization() {
-            this.Id = 0;
+            this.Id = ++Count_Org;
             this.Name = String.Empty;
         }
 
@@ -116,10 +120,22 @@ namespace Organization {
         }
 
         /// <summary>
+        /// Есть ли сотрудник в организации (по Id)
+        /// </summary>
+        /// <param name="id">Идентификатор проверяемой должности</param>
+        /// <returns>true - должность есть, false - нет</returns>
+        //public bool isIncludEmp(uint id) {
+        //    foreach (Department currDep in this.departs_Org)
+        //        if (currDep.isIncludAndVacant(id)) return true;
+
+        //    return false;
+        //}
+
+        /// <summary>
         /// Информация об организации
         /// </summary>
         /// <returns>String: Id, Name, CountDeparts</returns>
-        public string returnOrganizationInfo() {
+        public override string ToString() {
             return $"| Идентификатор организации: { this.Id } | Наименование организации: { this.Name } | Количество отделов: { this.CountDeparts } |";
         }
 

@@ -30,13 +30,12 @@ namespace Organization {
         #region Methods
 
         /// <summary>
-        /// Информация по проекту
+        /// Информация по проекту (переопределенный метод ToString())
         /// </summary>
         /// <returns>String: Id, Name, DateBegin, DateEnd, Description</returns>
-        public string returnProjectInfo() {
-            return $"| Идентификатор проекта: { this.Id } | Название проекта: { this.Name } | Дата начала: { this.DateBegin.ToShortDateString() } | Дата окончания: {this.DateEnd.ToShortDateString() } | Описание: {this.Description } |";
+        public override string ToString() {
+            return $"| Идентификатор проекта: { this.Id } | Название проекта: { this.Name } | Дата начала: { this.DateBegin.ToShortDateString() } | Дата окончания: {this.DateEnd.ToShortDateString() } | Описание: {this.Description } |"; ;
         }
-
         #endregion // Methods
 
 

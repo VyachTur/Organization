@@ -12,8 +12,11 @@ namespace Organization {
 
         #region Constructors
 
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
         public Department() {
-            this.Id = 0;
+            this.Id = ++Count_Dep;
             this.CreateDate = DateTime.Now;
             this.Name = String.Empty;
             this.positions_Dep = null;
@@ -238,7 +241,7 @@ namespace Organization {
                 }
 
                 // Если прошли цикл и не нашли должность среди сотрудников, то выводим информацию о вакантной должности
-                if (!trigger) outputStr += pos.returnPositionInfo() + '\n';
+                if (!trigger) outputStr += pos.ToString() + '\n';
                 trigger = false;
             }
 
@@ -269,7 +272,7 @@ namespace Organization {
         /// Информация об отделе
         /// </summary>
         /// <returns>String: Id, Name, CountPositions</returns>
-        public string returnDepartmentInfo() {
+        public override string ToString() {
             return $"| Идентификатор отдела: { this.Id } | Название отдела: { this.Name } | Количество должностей: { this.CountPositions } | Количество сотрудников: { this.CountEmployees } |";
         }
 

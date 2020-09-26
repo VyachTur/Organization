@@ -21,6 +21,9 @@ namespace Organization {
             //// Создаем организацию
             //Organization organization = CreateStructureOrganization();
 
+            //Console.WriteLine(organization.Departments[0].returnEmplAtId(9));
+
+
             //organization.printSortedEmployees(FIELDSORT.AGE);
 
         }
@@ -170,15 +173,18 @@ namespace Organization {
                         Console.Clear();
 
                         foreach (Employee emp in organization.returnDepAtName(depName).returnEmpls()) {
-                            Console.WriteLine(emp.returnEmployeeInfo());
+                            Console.WriteLine(emp.ToString());
                         }
 
                         Console.WriteLine();
 
-                        Console.Write("Введите идентификатор сотрудника, которого необходимо уволить: ");
                         uint idEmp;
 
-                        uint.TryParse(Console.ReadLine(), out idEmp);
+                        do {
+                            Console.Write("Введите идентификатор сотрудника, которого необходимо уволить: ");
+                            uint.TryParse(Console.ReadLine(), out idEmp);
+                        } while (organization.returnDepAtName(depName).returnEmplAtId(idEmp) == null);
+
 
                         organization.returnDepAtName(depName).delEmpl(organization.returnDepAtName(depName).returnEmplAtId(idEmp));
 
@@ -251,7 +257,7 @@ namespace Organization {
                         Console.Clear();
 
                         foreach (Employee emp in organization.returnDepAtName(depName).returnEmpls()) {
-                            Console.WriteLine(emp.returnEmployeeInfo());
+                            Console.WriteLine(emp.ToString());
                         }
 
                         Console.WriteLine();

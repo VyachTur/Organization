@@ -11,6 +11,19 @@ namespace Organization {
         #region Constructors
 
         /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Employee() {
+            this.Id = ++Count_Emp;
+            this.name_Emp = String.Empty;
+            this.family_Emp = String.Empty;
+            this.sirname_Emp = String.Empty;
+            this.birthDate_Emp = new DateTime();
+            this.position_Emp = new Position();
+            this.currentProjects_Emp = null;
+        }
+
+        /// <summary>
         /// Конструктор (1.1)
         /// </summary>
         /// <param name="name">Имя сотрудника</param>
@@ -94,10 +107,10 @@ namespace Organization {
 
 
         /// <summary>
-        /// Информация о сотруднике
+        /// Информация о сотруднике (переопределенный метод ToString())
         /// </summary>
         /// <returns>String: Id, Family, Name, Sirname, BirthDate</returns>
-        public string returnEmployeeInfo() {
+        public override string ToString() {
             return $"| Идентификатор сотрудника: { this.Id } | ФИО сотрудника: { this.Family } { this.Name } { this.Sirname } | Дата рождения: { this.BirthDate.ToShortDateString() } г.р. | Должность: { this.Post.Name } | Количество текущих проектов: { this.CountProjects } |";
         }
 
