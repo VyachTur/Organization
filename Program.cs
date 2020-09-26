@@ -289,31 +289,37 @@ namespace Organization {
 
                         //Project proj = new Project("Проект", DateTime.Now, DateTime.Now.AddDays(5), "Описание");
 
-                        //// Создаем сериализатор на основе указанного типа 
-                        //XmlSerializer xmlSerializer = new XmlSerializer(typeof(Organization));
+                        // Создаем сериализатор на основе указанного типа 
+                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(Organization));
 
-                        //// Создаем поток для сохранения данных
-                        //Stream fStream = new FileStream("organization.xml", FileMode.Create, FileAccess.Write);
+                        // Создаем поток для сохранения данных
+                        Stream fStream = new FileStream("organization.xml", FileMode.Create, FileAccess.Write);
 
-                        //// Запускаем процесс сериализации
-                        //xmlSerializer.Serialize(fStream, organization);
+                        // Запускаем процесс сериализации
+                        xmlSerializer.Serialize(fStream, organization);
 
-                        //// Закрываем поток
-                        //fStream.Close();
+                        // Закрываем поток
+                        fStream.Close();
 
                         continue;
 
                     case 9: // выбран пункт "Импорт информации в json"
-
+                        
 
                         continue;
 
                     case 10: // выбран пункт "Экспорт информации из xml"
 
 
+                        //ДЕЛАТЬ ЗАПРОС НА РЕЗЕРВНУЮ КОПИЮ!!! (файл organization_DateTime.Now.xml)
+
+
                         continue;
 
                     case 11: // выбран пункт "Экспорт информации из json"
+
+
+                        //ДЕЛАТЬ ЗАПРОС НА РЕЗЕРВНУЮ КОПИЮ!!! (файл organization_DateTime.Now.json)
 
 
                         continue;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Organization {
 
@@ -10,6 +11,14 @@ namespace Organization {
         const int MaxEmployeesInDep = 1_000_000;    // максимальное количество сотрудников в одном департаменте (отделе)
 
         #region Constructors
+
+        public Department() {
+            this.Id = 0;
+            this.CreateDate = DateTime.Now;
+            this.Name = String.Empty;
+            this.positions_Dep = null;
+            this.employees_Dep = null;
+        }
 
         /// <summary>
         /// Конструктор (1.1)
@@ -270,6 +279,7 @@ namespace Organization {
 
         #region Properties
 
+        [XmlIgnore]
         /// <summary>
         /// Идентификатор департамента (отдела)
         /// </summary>
@@ -280,6 +290,7 @@ namespace Organization {
         /// </summary>
         public string Name { get; set; }
 
+        [XmlIgnore]
         public DateTime CreateDate { get; private set; }
 
         /// <summary>

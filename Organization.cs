@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace Organization {
 
@@ -22,10 +23,10 @@ namespace Organization {
 
         #region Constructors
 
-        //public Organization() {
-        //    this.Id = 0;
-        //    this.Name = String.Empty;
-        //}
+        public Organization() {
+            this.Id = 0;
+            this.Name = String.Empty;
+        }
 
         /// <summary>
         /// Конструктор (1)
@@ -236,6 +237,7 @@ namespace Organization {
 
         #region Properties
 
+        [XmlIgnore]
         /// <summary>
         /// Идентификатор организации
         /// </summary>
@@ -253,6 +255,13 @@ namespace Organization {
             get {
                 return this.departs_Org == null ? 0 : this.departs_Org.Count;
             }
+        }
+
+        //[XmlArray("List")]
+        //[XmlArrayItem("Element")]
+        public List<Department> Departments {
+            get { return this.departs_Org; }
+            set { this.departs_Org = value; }
         }
 
 
