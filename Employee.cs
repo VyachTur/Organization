@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Organization {
 
     /// <summary>
-    /// Структура реализующая сотрудника департамента
+    /// Класс реализующий сотрудника департамента
     /// </summary>
     public class Employee {
 
@@ -13,15 +13,17 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Employee() {
-            this.Id = ++Count_Emp;
-            this.name_Emp = String.Empty;
-            this.family_Emp = String.Empty;
-            this.sirname_Emp = String.Empty;
-            this.birthDate_Emp = new DateTime();
-            this.position_Emp = new Position();
-            this.currentProjects_Emp = null;
-        }
+        //public Employee() {
+        //    this.Id = ++Count_Emp;
+        //    this.name_Emp = String.Empty;
+        //    this.family_Emp = String.Empty;
+        //    this.sirname_Emp = String.Empty;
+        //    this.birthDate_Emp = new DateTime();
+        //    this.position_Emp = new Position();
+        //    this.currentProjects_Emp = null;
+        //}
+        public Employee() { }
+
 
         /// <summary>
         /// Конструктор (1.1)

@@ -18,7 +18,7 @@ namespace Organization {
     }
 
     /// <summary>
-    /// Структура реализующая организацию
+    /// Класс реализующий организацию
     /// </summary>
     public class Organization {
 
@@ -27,10 +27,12 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Organization() {
-            this.Id = ++Count_Org;
-            this.Name = String.Empty;
-        }
+        //public Organization() {
+        //    this.Id = ++Count_Org;
+        //    this.Name = String.Empty;
+        //}
+        public Organization() { }
+
 
         /// <summary>
         /// Конструктор (1)
@@ -277,7 +279,7 @@ namespace Organization {
         //[XmlArrayItem("Element")]
         public List<Department> Departments {
             get { return this.departs_Org; }
-            set { this.departs_Org = value; }
+            //set { this.departs_Org = value; }
         }
 
 

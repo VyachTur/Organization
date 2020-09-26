@@ -16,7 +16,7 @@ namespace Organization {
             // Вывод меню (+создание примера организации)
             Menu();
 
-
+            //Random rnd = new Random(DateTime.Now.Millisecond);
 
             //// Создаем организацию
             //Organization organization = CreateStructureOrganization();

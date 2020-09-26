@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Organization {
 
     /// <summary>
-    /// Структура реализующая департамент (отдел)
+    /// Класс реализующий департамент (отдел) организации
     /// </summary>
     public class Department {
         const int MaxEmployeesInDep = 1_000_000;    // максимальное количество сотрудников в одном департаменте (отделе)
@@ -15,13 +15,14 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Department() {
-            this.Id = ++Count_Dep;
-            this.CreateDate = DateTime.Now;
-            this.Name = String.Empty;
-            this.positions_Dep = null;
-            this.employees_Dep = null;
-        }
+        //public Department() {
+        //    this.Id = ++Count_Dep;
+        //    this.CreateDate = DateTime.Now;
+        //    this.Name = String.Empty;
+        //    this.positions_Dep = null;
+        //    this.employees_Dep = null;
+        //}
+        public Department() { }
 
         /// <summary>
         /// Конструктор (1.1)
