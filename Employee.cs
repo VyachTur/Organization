@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Organization {
 
+    [Serializable]
     /// <summary>
     /// Класс реализующий сотрудника департамента
     /// </summary>
@@ -13,15 +14,6 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        //public Employee() {
-        //    this.Id = ++Count_Emp;
-        //    this.name_Emp = String.Empty;
-        //    this.family_Emp = String.Empty;
-        //    this.sirname_Emp = String.Empty;
-        //    this.birthDate_Emp = new DateTime();
-        //    this.position_Emp = new Position();
-        //    this.currentProjects_Emp = null;
-        //}
         public Employee() { }
 
 
@@ -123,7 +115,7 @@ namespace Organization {
         /// <summary>
         /// Идентификатор сотрудника
         /// </summary>
-        public uint Id { get; private set; }
+        public uint Id { get; }
 
         /// <summary>
         /// Имя сотрудника
@@ -200,7 +192,6 @@ namespace Organization {
         private DateTime birthDate_Emp;             // дата рождения сотрудника
         private Position position_Emp;              // должность сотрудника
         private List<Project> currentProjects_Emp;  // текущие проекты сотрудника
-        //private Department departament_Emp;         // департамент (отдел) в котором работает сотрудник
 
         private static uint Count_Emp = 0;  // счетчик сотрудников для определения идентификатора сотрудника (Id)
 

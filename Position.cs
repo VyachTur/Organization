@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Organization {
 
+    [Serializable]
     /// <summary>
     /// Структура реализующая должность в департаменте
     /// </summary>
@@ -45,7 +46,7 @@ namespace Organization {
         /// <summary>
         /// Идентификатор должности
         /// </summary>
-        public uint Id { get; private set; }
+        public uint Id { get; }
 
         /// <summary>
         /// Наименование должности

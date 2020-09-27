@@ -4,6 +4,8 @@ using System.Xml.Serialization;
 
 namespace Organization {
 
+
+    [Serializable]
     /// <summary>
     /// Класс реализующий департамент (отдел) организации
     /// </summary>
@@ -15,13 +17,6 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        //public Department() {
-        //    this.Id = ++Count_Dep;
-        //    this.CreateDate = DateTime.Now;
-        //    this.Name = String.Empty;
-        //    this.positions_Dep = null;
-        //    this.employees_Dep = null;
-        //}
         public Department() { }
 
         /// <summary>
@@ -283,19 +278,19 @@ namespace Organization {
 
         #region Properties
 
-        [XmlIgnore]
+        //[XmlIgnore]
         /// <summary>
         /// Идентификатор департамента (отдела)
         /// </summary>
-        public uint Id { get; private set; }
+        public uint Id { get; }
 
         /// <summary>
         /// Название отдела
         /// </summary>
         public string Name { get; set; }
 
-        [XmlIgnore]
-        public DateTime CreateDate { get; private set; }
+        //[XmlIgnore]
+        public DateTime CreateDate { get; set; }
 
         /// <summary>
         /// Количество должностей в отделе

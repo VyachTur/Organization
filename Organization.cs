@@ -17,6 +17,7 @@ namespace Organization {
         DEP_AGE_SALARY  // для сортировки по возрасту и зарплате в рамках одного департамента
     }
 
+    [Serializable]
     /// <summary>
     /// Класс реализующий организацию
     /// </summary>
@@ -27,10 +28,6 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        //public Organization() {
-        //    this.Id = ++Count_Org;
-        //    this.Name = String.Empty;
-        //}
         public Organization() { }
 
 
@@ -120,18 +117,6 @@ namespace Organization {
 
             return false;
         }
-
-        /// <summary>
-        /// Есть ли сотрудник в организации (по Id)
-        /// </summary>
-        /// <param name="id">Идентификатор проверяемой должности</param>
-        /// <returns>true - должность есть, false - нет</returns>
-        //public bool isIncludEmp(uint id) {
-        //    foreach (Department currDep in this.departs_Org)
-        //        if (currDep.isIncludAndVacant(id)) return true;
-
-        //    return false;
-        //}
 
         /// <summary>
         /// Информация об организации
@@ -255,11 +240,11 @@ namespace Organization {
 
         #region Properties
 
-        [XmlIgnore]
+        //[XmlIgnore]
         /// <summary>
         /// Идентификатор организации
         /// </summary>
-        public uint Id { get; private set; }
+        public uint Id { get; }
 
         /// <summary>
         /// Наименование организации
@@ -275,11 +260,11 @@ namespace Organization {
             }
         }
 
-        //[XmlArray("List")]
-        //[XmlArrayItem("Element")]
+        /// <summary>
+        /// Список департаментов в организации
+        /// </summary>
         public List<Department> Departments {
             get { return this.departs_Org; }
-            //set { this.departs_Org = value; }
         }
 
 

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Xml.Serialization;
+using System.Xml.Linq;
 using System.Linq;
 using System.Threading;
 
@@ -310,6 +313,12 @@ namespace Organization {
                         continue;
 
                     case 9: // выбран пункт "Импорт информации в json"
+
+                        string json = JsonConvert.SerializeObject(organization);
+
+                        File.WriteAllText("organization.json", json);
+
+                        Console.WriteLine();
                         
 
                         continue;
@@ -319,6 +328,23 @@ namespace Organization {
 
                         //ДЕЛАТЬ ЗАПРОС НА РЕЗЕРВНУЮ КОПИЮ!!! (файл organization_DateTime.Now.xml)
 
+                        Organization tempOrganization = new Organization();
+                        // Создаем сериализатор на основе указанного типа 
+                        xmlSerializer = new XmlSerializer(typeof(Organization));
+
+                        // Создаем поток для чтения данных
+                        fStream = new FileStream("organization.xml", FileMode.Open, FileAccess.Read);
+
+                        // Запускаем процесс десериализации
+                        tempOrganization = xmlSerializer.Deserialize(fStream) as Organization;
+
+                        // Закрываем поток
+                        fStream.Close();
+
+                        Console.WriteLine(tempOrganization.ToString());
+
+                        Console.ReadKey();
+
 
                         continue;
 
@@ -327,6 +353,13 @@ namespace Organization {
 
                         //ДЕЛАТЬ ЗАПРОС НА РЕЗЕРВНУЮ КОПИЮ!!! (файл organization_DateTime.Now.json)
 
+                        json = File.ReadAllText("organization.json");
+
+                        Organization org = JsonConvert.DeserializeObject<Organization>(json);
+
+                        Console.WriteLine(org.ToString());
+
+                        Console.ReadKey();
 
                         continue;
 

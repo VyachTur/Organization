@@ -2,6 +2,7 @@
 
 namespace Organization {
 
+    [Serializable]
     /// <summary>
     /// Структура реализующая проект
     /// </summary>
@@ -44,7 +45,7 @@ namespace Organization {
         /// <summary>
         /// Идентификатор проекта
         /// </summary>
-        public uint Id { get; private set; }
+        public uint Id { get; }
 
         /// <summary>
         /// Название проекта
