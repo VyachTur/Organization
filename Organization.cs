@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Xml.Linq;
-
+using Newtonsoft.Json.Linq;
 
 namespace Organization {
 
@@ -243,6 +243,9 @@ namespace Organization {
 
         ///////////////////////////////////////////////СЕРИАЛИЗАЦИЯ///////////////////////////////////////////////////
 
+
+        //////////////////////////////////////////////////XML/////////////////////////////////////////////
+        #region XML        
         /// <summary>
         /// Сериализует организацию
         /// </summary>
@@ -252,14 +255,28 @@ namespace Organization {
             XElement xeORGANIZATION = new XElement("ORGANIZATION");
             XAttribute xaNAME_ORG = new XAttribute("name", this.Name);
 
+            // ДЕПАРТАМЕНТЫ (ОТДЕЛЫ) ОРГАНИЗАЦИИ
             XElement xeDEPARTMENTS = new XElement("DEPARTMENTS");
-            
 
             foreach (Department dep in this.Departments) {
                 XElement xeDEPARTMENT = new XElement("DEPARTMENT");
                 XAttribute xaNAME_DEP = new XAttribute("name", dep.Name);
                 XAttribute xaCREATEDATE_DEP = new XAttribute("createdate", dep.CreateDate);
 
+                // ДОЛЖНОСТИ ОРГАНИЗАЦИИ
+                XElement xePOSITIONS = new XElement("POSITIONS");
+
+                foreach (Position pos in dep.returnPosts()) {
+                    XElement xePOSITION = new XElement("POSITION");
+                    XAttribute xaNAME_POS = new XAttribute("name", pos.Name);
+                    XAttribute xaSALARY_POS = new XAttribute("salary", pos.Salary);
+
+                    xePOSITION.Add(xaNAME_POS, xaSALARY_POS);
+                    xePOSITIONS.Add(xePOSITION);
+                }
+
+
+                // СОТРУДНИКИ ОРГАНИЗАЦИИ
                 XElement xeEMPLOYEES = new XElement("EMPLOYEES");
 
                 foreach (Employee emp in dep.returnEmpls()) {
@@ -298,6 +315,7 @@ namespace Organization {
 
 
                 xeDEPARTMENT.Add(xaNAME_DEP, xaCREATEDATE_DEP);
+                xeDEPARTMENT.Add(xePOSITIONS);
                 xeDEPARTMENT.Add(xeEMPLOYEES);
 
                 xeDEPARTMENTS.Add(xeDEPARTMENT);
@@ -321,15 +339,94 @@ namespace Organization {
             string xml = File.ReadAllText(path);
 
             tmpOrganization.Name = XDocument.Parse(xml)
-                            .Element("ORGANIZATION")
-                            .Attribute("name").Value;
+                                    .Element("ORGANIZATION")
+                                    .Attribute("name").Value;
 
+            var colDepsXml = XDocument.Parse(xml)
+                                .Descendants("ORGANIZATION")
+                                .Descendants("DEPARTMENTS")
+                                .Descendants("DEPARTMENT")
+                                .ToList();
 
+            // Цикл по департаментам (отделам) в организации
+            foreach (var itemDepXml in colDepsXml) {
+                Department dep = new Department();
+
+                dep.Name = itemDepXml.Attribute("name").Value;
+                dep.CreateDate = DateTime.Parse(itemDepXml.Attribute("createdate").Value);
+
+                // Цикл по должностям в отделе
+                foreach (var itemPosXml in itemDepXml.Element("POSITIONS").Elements()) {
+                    Position pos = new Position(itemPosXml.Attribute("name").Value, 
+                                                    uint.Parse(itemPosXml.Attribute("salary").Value));
+                    dep.addPost(pos);
+                }
+
+                // Цикл по сотрудникам в отделе
+                foreach (var itemEmpXml in itemDepXml.Element("EMPLOYEES").Elements()) {
+
+                    Employee emp = new Employee(itemEmpXml.Attribute("name").Value,
+                                                itemEmpXml.Attribute("family").Value,
+                                                itemEmpXml.Attribute("sirname").Value,
+                                                DateTime.Parse(itemEmpXml.Attribute("birthdate").Value),
+                                                dep.returnPosts().Find((item) => item.Name == itemEmpXml.Element("POSITION").Attribute("name").Value));
+                    
+                    
+                    foreach (var itemEmpProjXml in itemEmpXml.Element("PROJECTS").Elements()) {
+                        emp.addProject(new Project(itemEmpProjXml.Attribute("name").Value,
+                                                    DateTime.Parse(itemEmpProjXml.Attribute("datebegin").Value),
+                                                    DateTime.Parse(itemEmpProjXml.Attribute("dateend").Value),
+                                                    itemEmpProjXml.Attribute("description").Value));
+                    }
+                    
+                    
+                    dep.addEmpl(emp);
+                }
+
+                tmpOrganization.addDepartment(dep);
+            }
+
+            
             return tmpOrganization;
         }
 
+        #endregion // XML
+        ///////////////////////////////////////////////КОНЕЦ_XML///////////////////////////////////////////
+        ///
 
 
+        //////////////////////////////////////////////////JSON/////////////////////////////////////////////
+        #region JSON
+        /// <summary>
+        /// Сериализует организацию
+        /// </summary>
+        /// /// <param name="path">Путь к файлу импорта (json)</param>
+        public void jsonOrganizationSerializer(string path) {
+
+            JObject joOrg = new JObject();
+            joOrg["name"] = this.Name;
+
+            JArray jaDeps = new JArray();
+
+            foreach (Department dep in this.Departments) {
+                JObject joDep = new JObject();
+
+                joDep["name"] = dep.Name;
+                joDep["createdate"] = dep.CreateDate;
+
+                jaDeps.Add(joDep);
+            }
+
+            //joOrg.Add(jaDeps);
+            joOrg["departments"] = jaDeps;
+
+            File.WriteAllText(@"organization.json", joOrg.ToString());
+
+        }
+
+        #endregion // JSON
+        ///////////////////////////////////////////////КОНЕЦ_JSON///////////////////////////////////////////
+        ///
 
 
         ////////////////////////////////////////////КОНЕЦ_СЕРИАЛИЗАЦИЯ////////////////////////////////////////////////

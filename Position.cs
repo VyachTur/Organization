@@ -44,7 +44,7 @@ namespace Organization {
         /// <summary>
         /// Идентификатор должности
         /// </summary>
-        public uint Id { get; }
+        public uint Id { get; set; }
 
         /// <summary>
         /// Наименование должности

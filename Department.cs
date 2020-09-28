@@ -42,13 +42,6 @@ namespace Organization {
             }
         }
 
-        /// <summary>
-        /// Конструктор (1.2)
-        /// </summary>
-        /// <param name="name">Название департамента (отдела)</param>
-        /// <param name="posts">Список должностей</param>
-        //public Department(string name, List<Position> posts) : this(name, posts, null) { }
-
 
         /// <summary>
         /// Конструктор (2)
@@ -144,7 +137,11 @@ namespace Organization {
         /// <param name="post">Должность</param>
         public void delPost(ref Position post) {
             if (this.positions_Dep != null) {
-                // Если элемент есть в списке, то удаляем его
+                foreach (var emp in this.employees_Dep) {
+                    // Если на сокращаемой должность стоит сотрудник, то сокращаем и его
+                    if (emp.Post.Id == post.Id) delEmpl(emp);
+                }
+                // Удаляем элемент из списка должностей
                 if (this.positions_Dep.Contains(post)) this.positions_Dep.Remove(post);
             }
         }
@@ -188,7 +185,7 @@ namespace Organization {
         }
 
         /// <summary>
-        /// Возвращает должность по её названию
+        /// Возвращает должность по её идентификатору
         /// </summary>
         /// <param name="idPost">Идентификатор должности</param>
         /// <returns></returns>
@@ -317,7 +314,7 @@ namespace Organization {
 
         #region Fields
 
-        private List<Position> positions_Dep;   // должности в департаменте (отделе)
+        private List<Position> positions_Dep;   // вакантные должности в департаменте (отделе)
         private List<Employee> employees_Dep;   // сотрудники департамента (отдела)
 
         private static uint Count_Dep = 0;  // счетчик для идентификатора департамента

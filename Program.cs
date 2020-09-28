@@ -24,6 +24,7 @@ namespace Organization {
             //// Создаем организацию
             //Organization organization = CreateStructureOrganization();
 
+            //int i = 1;
             //organization.XmlOrganizationSerializer(@"org.xml");
 
             //Console.WriteLine(organization.Departments[0].returnEmplAtId(9));
@@ -312,15 +313,34 @@ namespace Organization {
                             Console.ReadKey();
                         }
 
+                        
+
                         continue;
 
                     case 9: // выбран пункт "Импорт информации в json"
 
-                        string json = JsonConvert.SerializeObject(organization);
 
-                        File.WriteAllText("organization.json", json);
+                        Console.Write("Импортировать информацию об организации в в файл json? (да/нет) ");
 
-                        Console.WriteLine();
+                        if (Console.ReadLine().ToUpper() == "ДА") {
+                            // Сериализуем организацию в xml-файл
+                            organization.jsonOrganizationSerializer(@"organization.json");
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"Информация об организации записана в " +
+                                $"файл {Directory.GetCurrentDirectory()}\\organization.json");
+                            Console.ResetColor();
+
+                            Console.ReadKey();
+                        }
+
+
+
+                        //string json = JsonConvert.SerializeObject(organization);
+
+                        //File.WriteAllText("organization.json", json);
+
+                        //Console.WriteLine();
                         
 
                         continue;
@@ -353,10 +373,7 @@ namespace Organization {
 
                             if (File.Exists(@"organization.xml")) {
                                 Console.Clear();
-
-                                ////////////////////// TODO
-                                //organization.xmlOrganizationDeserializer(@"organization.xml");
-
+                                // Десериализуем организацию
                                 organization = Organization.xmlOrganizationDeserializer(@"organization.xml");
 
                                 Console.ForegroundColor = ConsoleColor.Green;
