@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
+//using System.Xml.Serialization;
 
 namespace Organization {
 
@@ -278,7 +278,6 @@ namespace Organization {
 
         #region Properties
 
-        //[XmlIgnore]
         /// <summary>
         /// Идентификатор департамента (отдела)
         /// </summary>
@@ -289,7 +288,9 @@ namespace Organization {
         /// </summary>
         public string Name { get; set; }
 
-        //[XmlIgnore]
+        /// <summary>
+        /// Дата создания отдела
+        /// </summary>
         public DateTime CreateDate { get; set; }
 
         /// <summary>

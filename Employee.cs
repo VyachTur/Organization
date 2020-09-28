@@ -112,6 +112,7 @@ namespace Organization {
 
 
         #region Properties
+
         /// <summary>
         /// Идентификатор сотрудника
         /// </summary>

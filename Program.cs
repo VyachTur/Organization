@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Xml.Serialization;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Threading;
 
@@ -23,6 +23,8 @@ namespace Organization {
 
             //// Создаем организацию
             //Organization organization = CreateStructureOrganization();
+
+            //organization.XmlOrganizationSerializer(@"org.xml");
 
             //Console.WriteLine(organization.Departments[0].returnEmplAtId(9));
 
@@ -296,19 +298,19 @@ namespace Organization {
 
                     case 8: // выбран пункт "Импорт информации в xml"
 
-                        //Project proj = new Project("Проект", DateTime.Now, DateTime.Now.AddDays(5), "Описание");
+                        Console.Write("Импортировать информацию об организации в в файл xml? (да/нет) ");
+                        
+                        if (Console.ReadLine().ToUpper() == "ДА") {
+                            // Сериализуем организацию в xml-файл
+                            organization.xmlOrganizationSerializer(@"organization.xml");
 
-                        // Создаем сериализатор на основе указанного типа 
-                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(Organization));
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"Информация об организации записана в " +
+                                $"файл {Directory.GetCurrentDirectory()}\\organization.xml");
+                            Console.ResetColor();
 
-                        // Создаем поток для сохранения данных
-                        Stream fStream = new FileStream("organization.xml", FileMode.Create, FileAccess.Write);
-
-                        // Запускаем процесс сериализации
-                        xmlSerializer.Serialize(fStream, organization);
-
-                        // Закрываем поток
-                        fStream.Close();
+                            Console.ReadKey();
+                        }
 
                         continue;
 
@@ -324,27 +326,52 @@ namespace Organization {
                         continue;
 
                     case 10: // выбран пункт "Экспорт информации из xml"
+                        Console.Write("Экспортировать информацию из файла organization.xml? (да/нет) ");
+                        
+                        if (Console.ReadLine().ToUpper() == "ДА") {
+                            Console.Clear();
+                            // Запрос на создание резервной копии
+                            ////////////////////////////////////////////////////////////////////////////
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("При экспорте информации из xml-файла все текущие данные организации будут заменены новыми!");
+                            Console.ResetColor();
+                            Console.Write("Сделать резервную копию организации в файл xml? (да/нет) ");
 
+                            if (Console.ReadLine().ToUpper() == "ДА") {
+                                // Сериализуем организацию в xml-файл
+                                organization.xmlOrganizationSerializer(@$"organization_{DateTime.Now.ToShortDateString()}.xml");
 
-                        //ДЕЛАТЬ ЗАПРОС НА РЕЗЕРВНУЮ КОПИЮ!!! (файл organization_DateTime.Now.xml)
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine($"Информация об организации записана в " +
+                                    $"файл {Directory.GetCurrentDirectory()}\\organization_{DateTime.Now.ToShortDateString()}.xml");
+                                Console.ResetColor();
 
-                        Organization tempOrganization = new Organization();
-                        // Создаем сериализатор на основе указанного типа 
-                        xmlSerializer = new XmlSerializer(typeof(Organization));
+                                Console.ReadKey();
+                            }
+                            ////////////////////////////////////////////////////////////////////////////
+                            ///
 
-                        // Создаем поток для чтения данных
-                        fStream = new FileStream("organization.xml", FileMode.Open, FileAccess.Read);
+                            if (File.Exists(@"organization.xml")) {
+                                Console.Clear();
 
-                        // Запускаем процесс десериализации
-                        tempOrganization = xmlSerializer.Deserialize(fStream) as Organization;
+                                ////////////////////// TODO
+                                //organization.xmlOrganizationDeserializer(@"organization.xml");
 
-                        // Закрываем поток
-                        fStream.Close();
+                                organization = Organization.xmlOrganizationDeserializer(@"organization.xml");
 
-                        Console.WriteLine(tempOrganization.ToString());
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine($"Информация об организации экспортирована из " +
+                                    $"файла {Directory.GetCurrentDirectory()}\\organization.xml");
+                                Console.ResetColor();
 
-                        Console.ReadKey();
+                                Console.ReadKey();
 
+                            } else {
+                                Console.WriteLine($"Файла {Directory.GetCurrentDirectory()}\\organization.xml не существует!");
+                                
+                                Console.ReadKey();
+                            }
+                        }
 
                         continue;
 
@@ -353,13 +380,7 @@ namespace Organization {
 
                         //ДЕЛАТЬ ЗАПРОС НА РЕЗЕРВНУЮ КОПИЮ!!! (файл organization_DateTime.Now.json)
 
-                        json = File.ReadAllText("organization.json");
-
-                        Organization org = JsonConvert.DeserializeObject<Organization>(json);
-
-                        Console.WriteLine(org.ToString());
-
-                        Console.ReadKey();
+                        
 
                         continue;
 

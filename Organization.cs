@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using System.Xml.Linq;
+
 
 namespace Organization {
 
@@ -136,13 +138,16 @@ namespace Organization {
 
             Console.WriteLine("------------------------------------------------------------------------------------------------------");
 
-            // Информация выводится по сотрудникам в организации (пустые отделы и должности не выводятся)
-            foreach (Department currDep in this.departs_Org) {
-                foreach (Employee currEmp in currDep.returnEmpls()) {
+            if (this.departs_Org != null) {
 
-                    Console.WriteLine($"| {currEmp.Id, 2} | {currEmp.Name, 10} | {currEmp.Family, 15} | {currEmp.Age, 7} |" +
-                                $"{currEmp.Dep.Name, 20} | {currEmp.Post.Salary, 12} | {currEmp.CountProjects, 15} |");
+                // Информация выводится по сотрудникам в организации (пустые отделы и должности не выводятся)
+                foreach (Department currDep in this.departs_Org) {
+                    foreach (Employee currEmp in currDep.returnEmpls()) {
 
+                        Console.WriteLine($"| {currEmp.Id,2} | {currEmp.Name,10} | {currEmp.Family,15} | {currEmp.Age,7} |" +
+                                    $"{currEmp.Dep.Name,20} | {currEmp.Post.Salary,12} | {currEmp.CountProjects,15} |");
+
+                    }
                 }
             }
 
@@ -161,7 +166,7 @@ namespace Organization {
         ///                                             FIELDSORT.AGE_SALARY - по возрасту и зарплате,
         ///                                             FIELDSORT.DEP_AGE_SALARY - по возр. и зп. в рамках одного деп.</param>
         /// <returns>Лист сотрудников, отсортированных по выбранному критерию</returns>
-        public List<Employee> getSortEmployees(FIELDSORT critSort = FIELDSORT.ID) {
+        private List<Employee> getSortEmployees(FIELDSORT critSort = FIELDSORT.ID) {
             List<Employee> lstEmp = new List<Employee>();
 
             foreach (Department currDep in this.departs_Org) {
@@ -220,10 +225,11 @@ namespace Organization {
 
             Console.WriteLine("------------------------------------------------------------------------------------------------------");
 
-            foreach (Employee emp in this.getSortEmployees(critSort)) {
-                Console.WriteLine($"| {emp.Id,2} | {emp.Name,10} | {emp.Family,15} | {emp.Age,7} |" +
-                                $"{emp.Dep.Name,20} | {emp.Post.Salary,12} | {emp.CountProjects,15} |");
-
+            if (this.departs_Org != null) {
+                foreach (Employee emp in this.getSortEmployees(critSort)) {
+                    Console.WriteLine($"| {emp.Id,2} | {emp.Name,10} | {emp.Family,15} | {emp.Age,7} |" +
+                                    $"{emp.Dep.Name,20} | {emp.Post.Salary,12} | {emp.CountProjects,15} |");
+                }
             }
 
             Console.ReadKey();
@@ -234,13 +240,108 @@ namespace Organization {
 
 
 
-        #endregion // Methods
 
+        ///////////////////////////////////////////////СЕРИАЛИЗАЦИЯ///////////////////////////////////////////////////
+
+        /// <summary>
+        /// Сериализует организацию
+        /// </summary>
+        /// /// <param name="path">Путь к файлу импорта (xml)</param>
+        public void xmlOrganizationSerializer(string path) {
+
+            XElement xeORGANIZATION = new XElement("ORGANIZATION");
+            XAttribute xaNAME_ORG = new XAttribute("name", this.Name);
+
+            XElement xeDEPARTMENTS = new XElement("DEPARTMENTS");
+            
+
+            foreach (Department dep in this.Departments) {
+                XElement xeDEPARTMENT = new XElement("DEPARTMENT");
+                XAttribute xaNAME_DEP = new XAttribute("name", dep.Name);
+                XAttribute xaCREATEDATE_DEP = new XAttribute("createdate", dep.CreateDate);
+
+                XElement xeEMPLOYEES = new XElement("EMPLOYEES");
+
+                foreach (Employee emp in dep.returnEmpls()) {
+                    XElement xeEMPLOYEE = new XElement("EMPLOYEE");
+                    XAttribute xaNAME_EMP = new XAttribute("name", emp.Name);
+                    XAttribute xaFAMILY_EMP = new XAttribute("family", emp.Family);
+                    XAttribute xaSIRNAME_EMP = new XAttribute("sirname", emp.Sirname);
+                    XAttribute xaBIRTHDATE = new XAttribute("birthdate", emp.BirthDate);
+
+                    XAttribute xaNAME_POS = new XAttribute("name", emp.Post.Name);
+                    XAttribute xaSALARY_POS = new XAttribute("salary", emp.Post.Salary);
+                    XElement xePOSITION_EMP = new XElement("POSITION", xaNAME_POS, xaSALARY_POS);
+
+                    XElement xePROJECTS = new XElement("PROJECTS");
+
+                    foreach (Project proj in emp.returnProjects()) {
+                        XElement xePROJECT = new XElement("PROJECT");
+                        XAttribute xaNAME_PROJ = new XAttribute("name", proj.Name);
+                        XAttribute xaDATEBEG_PROJ = new XAttribute("datebegin", proj.DateBegin);
+                        XAttribute xaDATEEND_PROJ = new XAttribute("dateend", proj.DateEnd);
+                        XAttribute xaDESCRIPTION = new XAttribute("description", proj.Description);
+
+                        xePROJECT.Add(xaNAME_PROJ, xaDATEBEG_PROJ, xaDATEEND_PROJ, xaDESCRIPTION);
+
+                        xePROJECTS.Add(xePROJECT);
+                    }
+
+
+                    xeEMPLOYEE.Add(xaNAME_EMP, xaFAMILY_EMP, xaSIRNAME_EMP, xaBIRTHDATE);
+                    xeEMPLOYEE.Add(xePOSITION_EMP);
+                    xeEMPLOYEE.Add(xePROJECTS);
+
+                    xeEMPLOYEES.Add(xeEMPLOYEE);
+                }
+
+
+
+                xeDEPARTMENT.Add(xaNAME_DEP, xaCREATEDATE_DEP);
+                xeDEPARTMENT.Add(xeEMPLOYEES);
+
+                xeDEPARTMENTS.Add(xeDEPARTMENT);
+
+            }
+
+            xeORGANIZATION.Add(xeDEPARTMENTS, xaNAME_ORG);
+
+            xeORGANIZATION.Save(path);
+        }
+
+
+
+        /// <summary>
+        /// Десериализует организацию
+        /// </summary>
+        /// <param name="path">Путь к файлу экспорта (xml)</param>
+        public static Organization xmlOrganizationDeserializer(string path) {
+            Organization tmpOrganization = new Organization();
+
+            string xml = File.ReadAllText(path);
+
+            tmpOrganization.Name = XDocument.Parse(xml)
+                            .Element("ORGANIZATION")
+                            .Attribute("name").Value;
+
+
+            return tmpOrganization;
+        }
+
+
+
+
+
+        ////////////////////////////////////////////КОНЕЦ_СЕРИАЛИЗАЦИЯ////////////////////////////////////////////////
+
+
+
+        #endregion // Methods
 
 
         #region Properties
 
-        //[XmlIgnore]
+
         /// <summary>
         /// Идентификатор организации
         /// </summary>
