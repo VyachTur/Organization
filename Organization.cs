@@ -30,7 +30,9 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Organization() { }
+        public Organization() {
+            this.Id = ++Count_Org;
+        }
 
 
         /// <summary>
@@ -247,7 +249,7 @@ namespace Organization {
         //////////////////////////////////////////////////XML/////////////////////////////////////////////
         #region XML        
         /// <summary>
-        /// Сериализует организацию
+        /// Сериализует организацию (xml)
         /// </summary>
         /// /// <param name="path">Путь к файлу импорта (xml)</param>
         public void xmlOrganizationSerializer(string path) {
@@ -330,7 +332,7 @@ namespace Organization {
 
 
         /// <summary>
-        /// Десериализует организацию
+        /// Десериализует организацию (xml)
         /// </summary>
         /// <param name="path">Путь к файлу экспорта (xml)</param>
         public static Organization xmlOrganizationDeserializer(string path) {
@@ -350,9 +352,8 @@ namespace Organization {
 
             // Цикл по департаментам (отделам) в организации
             foreach (var itemDepXml in colDepsXml) {
-                Department dep = new Department();
+                Department dep = new Department(itemDepXml.Attribute("name").Value);
 
-                dep.Name = itemDepXml.Attribute("name").Value;
                 dep.CreateDate = DateTime.Parse(itemDepXml.Attribute("createdate").Value);
 
                 // Цикл по должностям в отделе
@@ -364,14 +365,15 @@ namespace Organization {
 
                 // Цикл по сотрудникам в отделе
                 foreach (var itemEmpXml in itemDepXml.Element("EMPLOYEES").Elements()) {
-
+                    // Создание нового сотрудника
                     Employee emp = new Employee(itemEmpXml.Attribute("name").Value,
                                                 itemEmpXml.Attribute("family").Value,
                                                 itemEmpXml.Attribute("sirname").Value,
                                                 DateTime.Parse(itemEmpXml.Attribute("birthdate").Value),
-                                                dep.returnPosts().Find((item) => item.Name == itemEmpXml.Element("POSITION").Attribute("name").Value));
+                                                dep.returnPosts().Find((item) => item.Name == itemEmpXml.Element("POSITION").Attribute("name").Value
+                                                                                    && item.Salary == uint.Parse(itemEmpXml.Element("POSITION").Attribute("salary").Value)));
                     
-                    
+                    // Цикл по проектам сотрудника
                     foreach (var itemEmpProjXml in itemEmpXml.Element("PROJECTS").Elements()) {
                         emp.addProject(new Project(itemEmpProjXml.Attribute("name").Value,
                                                     DateTime.Parse(itemEmpProjXml.Attribute("datebegin").Value),
@@ -380,10 +382,10 @@ namespace Organization {
                     }
                     
                     
-                    dep.addEmpl(emp);
+                    dep.addEmpl(emp);   // добавляем созданного сотрудника в отдел
                 }
 
-                tmpOrganization.addDepartment(dep);
+                tmpOrganization.addDepartment(dep); // добавляем созданный отдел в организацию
             }
 
             
@@ -398,30 +400,148 @@ namespace Organization {
         //////////////////////////////////////////////////JSON/////////////////////////////////////////////
         #region JSON
         /// <summary>
-        /// Сериализует организацию
+        /// Сериализует организацию (json)
         /// </summary>
         /// /// <param name="path">Путь к файлу импорта (json)</param>
         public void jsonOrganizationSerializer(string path) {
 
-            JObject joOrg = new JObject();
+            JObject joOrg = new JObject();  // организация
             joOrg["name"] = this.Name;
 
-            JArray jaDeps = new JArray();
+            JArray jaDeps = new JArray();   // массив отделов
 
+            // Цикл по отделам в организации
             foreach (Department dep in this.Departments) {
-                JObject joDep = new JObject();
+                JObject joDep = new JObject();  // департамент организации
+                JArray jaPosts = new JArray();  // массив должностей в отделе
+                JArray jaEmpls = new JArray();  // массив сотрудников в отделе
 
                 joDep["name"] = dep.Name;
                 joDep["createdate"] = dep.CreateDate;
 
+                // Цикл по должностям в отделе
+                foreach (Position pos in dep.returnPosts()) {
+                    JObject joPost = new JObject(); // должность в отделе
+
+                    joPost["name"] = pos.Name;
+                    joPost["salary"] = pos.Salary;
+
+                    jaPosts.Add(joPost);
+                }
+
+                joDep["positions"] = jaPosts;
+
+                // Цикл по сотрудникам отдела
+                foreach (Employee emp in dep.returnEmpls()) {
+                    JObject joEmpl = new JObject();     // сотрудник отдела
+                    JObject joPosEmpl = new JObject();  // должность сотрудника
+                    JArray jaProjects = new JArray();   // проекты сотрудника
+
+                    joEmpl["name"] = emp.Name;
+                    joEmpl["family"] = emp.Family;
+                    joEmpl["sirname"] = emp.Sirname;
+                    joEmpl["birthdate"] = emp.BirthDate;
+
+
+                    joPosEmpl["name"] = emp.Post.Name;
+                    joPosEmpl["salary"] = emp.Post.Salary;
+
+                    joEmpl["position"] = joPosEmpl;
+
+                    foreach (Project proj in emp.returnProjects()) {
+                        JObject joProj = new JObject(); // проект сотрудника
+
+                        joProj["name"] = proj.Name;
+                        joProj["datebegin"] = proj.DateBegin;
+                        joProj["dateend"] = proj.DateEnd;
+                        joProj["description"] = proj.Description;
+
+                        jaProjects.Add(joProj);
+                    }
+
+                    joEmpl["projects"] = jaProjects;
+
+                    jaEmpls.Add(joEmpl);
+                }
+
+                joDep["employees"] = jaEmpls;
+
                 jaDeps.Add(joDep);
             }
 
-            //joOrg.Add(jaDeps);
+
             joOrg["departments"] = jaDeps;
+
+
+
 
             File.WriteAllText(@"organization.json", joOrg.ToString());
 
+        }
+
+        /// <summary>
+        /// Десериализует организацию (json)
+        /// </summary>
+        /// <param name="path">Путь к файлу экспорта (json)</param>
+        public static Organization jsonOrganizationDeserializer(string path) {
+            Organization tmpOrganization = new Organization();
+
+            string json = File.ReadAllText(path);
+
+            tmpOrganization.Name = JObject.Parse(json)["name"].ToString();
+
+            var jsonDeps = JObject.Parse(json)["departments"].ToArray();
+
+            // Цикл по отделам в организации
+            foreach (var jsonDep in jsonDeps) {
+                Department dep = new Department(jsonDep["name"].ToString());
+
+                dep.CreateDate = DateTime.Parse(jsonDep["createdate"].ToString());
+
+                var jsonPosts = jsonDep["positions"].ToArray();
+
+                // Цикл по должностям в отделе
+                foreach (var jsonPost in jsonPosts) {
+                    Position pos = new Position(jsonPost["name"].ToString(),
+                                                uint.Parse(jsonPost["salary"].ToString()));
+
+                    dep.addPost(pos);
+                }
+
+                var jsonEmpls = jsonDep["employees"].ToArray();
+
+                // Цикл по сотрудникам в отделе
+                foreach (var jsonEmpl in jsonEmpls) {
+                    // Создание нового сотрудника
+                    Employee empl = new Employee(jsonEmpl["name"].ToString(),
+                                                 jsonEmpl["family"].ToString(),
+                                                 jsonEmpl["sirname"].ToString(),
+                                                 DateTime.Parse(jsonEmpl["birthdate"].ToString()),
+                                                 dep.returnPosts().Find((item) => item.Name == jsonEmpl["position"]["name"].ToString()
+                                                                                    && item.Salary == uint.Parse(jsonEmpl["position"]["salary"].ToString())));
+
+
+                    var jsonProjects = jsonEmpl["projects"].ToArray();
+
+                    // Цикл по проектам сотрудника
+                    foreach (var jsonProject in jsonProjects) {
+                        empl.addProject(new Project(jsonProject["name"].ToString(),
+                                                    DateTime.Parse(jsonProject["datebegin"].ToString()),
+                                                    DateTime.Parse(jsonProject["dateend"].ToString()),
+                                                    jsonProject["description"].ToString()));
+                    }
+
+
+                    dep.addEmpl(empl);  // добавляем созданного сотрудника в отдел
+                }
+
+
+                tmpOrganization.addDepartment(dep); // добавляем созданный отдел в организацию
+            }
+
+            
+
+            return tmpOrganization;
         }
 
         #endregion // JSON

@@ -14,7 +14,9 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Employee() { }
+        public Employee() {
+            this.Id = ++Count_Emp;
+        }
 
 
         /// <summary>

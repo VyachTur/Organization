@@ -17,7 +17,9 @@ namespace Organization {
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Department() { }
+        public Department() {
+            this.Id = ++Count_Dep;
+        }
 
         /// <summary>
         /// Конструктор (1.1)
