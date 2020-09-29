@@ -2,7 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 
@@ -21,7 +20,7 @@ namespace Organization {
 
     [Serializable]
     /// <summary>
-    /// Класс реализующий организацию
+    /// Класс реализующий организацию (ОСНОВНОЙ КЛАСС!)
     /// </summary>
     public class Organization {
 
@@ -242,9 +241,7 @@ namespace Organization {
 
 
 
-
         ///////////////////////////////////////////////СЕРИАЛИЗАЦИЯ///////////////////////////////////////////////////
-
 
         //////////////////////////////////////////////////XML/////////////////////////////////////////////
         #region XML        
@@ -547,7 +544,6 @@ namespace Organization {
         #endregion // JSON
         ///////////////////////////////////////////////КОНЕЦ_JSON///////////////////////////////////////////
         ///
-
 
         ////////////////////////////////////////////КОНЕЦ_СЕРИАЛИЗАЦИЯ////////////////////////////////////////////////
 

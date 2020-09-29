@@ -1,37 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
-using System.Xml.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using System.Threading;
 
 namespace Organization {
     class Program {
 
         static void Main(string[] args) {
 
-            //TitleAnimation("ОРГАНИЗАЦИЯ", ConsoleColor.DarkCyan); // анимация заголовка
-            //Console.Clear();
+            TitleAnimation("ОРГАНИЗАЦИЯ", ConsoleColor.DarkCyan); // анимация заголовка
+            Console.Clear();
 
-            // Вывод меню (+создание примера организации)
+            // Вывод меню (+ создание примера организации)
             Menu();
-
-            //Random rnd = new Random(DateTime.Now.Millisecond);
-
-            //// Создаем организацию
-            //Organization organization = CreateStructureOrganization();
-
-            //int i = 1;
-            //organization.XmlOrganizationSerializer(@"org.xml");
-
-            //Console.WriteLine(organization.Departments[0].returnEmplAtId(9));
-
-
-            //organization.printSortedEmployees(FIELDSORT.AGE);
-
         }
 
 
@@ -40,8 +20,8 @@ namespace Organization {
         /// </summary>
         static public void Menu() {
 
-            Organization organization = new Organization();   // создаем пустую организацию для наполнения
-            //Organization organization = CreateStructureOrganization();  // создание организации для теста
+            //Organization organization = new Organization();   // создаем пустую организацию для наполнения
+            Organization organization = CreateStructureOrganization();  // создание организации для теста
 
             int choice = 0;
 
@@ -473,7 +453,7 @@ namespace Organization {
 
 
         /// <summary>
-        /// Создаем организацию (для проверки)
+        /// Создаем тестовую организацию (для проверки)
         /// </summary>
         /// <returns>Организация</returns>
         static Organization CreateStructureOrganization() {
