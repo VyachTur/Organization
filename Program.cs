@@ -502,7 +502,7 @@ namespace Organization {
             Employee emp4 = new Employee("Сидр", "Старший", "Сидорович", DateTime.Parse("24.05.1975"), pos5, prLst);
             Employee emp5 = new Employee("Иван", "Разов", "Иванович", DateTime.Parse("01.01.1991"), pos6);
             Employee emp6 = new Employee("Сергей", "Двоев", "Сергеевич", DateTime.Parse("02.01.1991"), pos7);
-            Employee emp7 = new Employee("Стажеркин", "Геннадий", "Геннадьевич", DateTime.Parse("15.05.2000"), pos9);
+            Employee emp7 = new Employee("Геннадий", "Стажеркин", "Геннадьевич", DateTime.Parse("15.05.2000"), pos9);
 
             emp5.addProject(pr1);
             emp5.addProject(pr2);
