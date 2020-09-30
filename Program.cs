@@ -40,10 +40,10 @@ namespace Organization {
                     Console.WriteLine("6 - Добавить новый проект для сотрудника;");
                     Console.WriteLine("7 - Вывод информации об организации;");
                     Console.WriteLine("========================================================");
-                    Console.WriteLine("8 - Импорт информации в xml;");
-                    Console.WriteLine("9 - Импорт информации в json;");
-                    Console.WriteLine("10 - Экспорт информации из xml;");
-                    Console.WriteLine("11 - Экспорт информации из json;");
+                    Console.WriteLine("8 - Импорт информации из xml;");
+                    Console.WriteLine("9 - Импорт информации из json;");
+                    Console.WriteLine("10 - Экспорт информации в xml;");
+                    Console.WriteLine("11 - Экспорт информации в json;");
                     Console.WriteLine("========================================================");
                     Console.WriteLine("12 - Выйти из программы.");
                     Console.WriteLine("========================================================");
@@ -277,75 +277,16 @@ namespace Organization {
 
                         continue;
 
-                    case 8: // выбран пункт "Импорт информации в xml"
+                    case 8: // выбран пункт "Импорт информации из xml"
 
-                        // Если организация пуста
-                        if (organization.Name == null) {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Организация пуста!");
-                            Console.ReadKey();
-
-                            Console.ResetColor();
-
-                            continue;
-                        }
-
-                        Console.Write("Импортировать информацию об организации в в файл xml? (да/нет) ");
-                        
-                        if (Console.ReadLine().ToUpper() == "ДА") {
-                            // Сериализуем организацию в xml-файл
-                            organization.xmlOrganizationSerializer(@"organization.xml");
-
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine($"Информация об организации записана в " +
-                                $"файл {Directory.GetCurrentDirectory()}\\organization.xml");
-                            Console.ResetColor();
-
-                            Console.ReadKey();
-                        }
-
-                        continue;
-
-                    case 9: // выбран пункт "Импорт информации в json"
-
-                        // Если организация пуста
-                        if (organization.Name == null) {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Организация пуста!");
-                            Console.ReadKey();
-
-                            Console.ResetColor();
-
-                            continue;
-                        }
-
-                        Console.Write("Импортировать информацию об организации в в файл json? (да/нет) ");
-
-                        if (Console.ReadLine().ToUpper() == "ДА") {
-                            // Сериализуем организацию в xml-файл
-                            organization.jsonOrganizationSerializer(@"organization.json");
-
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine($"Информация об организации записана в " +
-                                $"файл {Directory.GetCurrentDirectory()}\\organization.json");
-                            Console.ResetColor();
-
-                            Console.ReadKey();
-                        }
-
-                        continue;
-
-                    case 10: // выбран пункт "Экспорт информации из xml"
                         Console.Write("Экспортировать информацию из файла organization.xml? (да/нет) ");
-                        
+
                         if (Console.ReadLine().ToUpper() == "ДА") {
                             Console.Clear();
 
                             // Запрос на создание резервной копии
                             ////////////////////////////////////////////////////////////////////////////
-                            
+
                             // Если организация пустая
                             if (organization.Name != null) {
                                 Console.ForegroundColor = ConsoleColor.Red;
@@ -380,16 +321,18 @@ namespace Organization {
 
                                 Console.ReadKey();
 
-                            } else {
+                            }
+                            else {
                                 Console.WriteLine($"Файла {Directory.GetCurrentDirectory()}\\organization.xml не существует!");
-                                
+
                                 Console.ReadKey();
                             }
                         }
 
                         continue;
 
-                    case 11: // выбран пункт "Экспорт информации из json"
+                    case 9: // выбран пункт "Импорт информации из json"
+
                         Console.Write("Экспортировать информацию из файла organization.json? (да/нет) ");
 
                         if (Console.ReadLine().ToUpper() == "ДА") {
@@ -439,6 +382,66 @@ namespace Organization {
                             }
                         }
 
+
+                        continue;
+
+                    case 10: // выбран пункт "Экспорт информации в xml"
+
+                        // Если организация пуста
+                        if (organization.Name == null) {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Организация пуста!");
+                            Console.ReadKey();
+
+                            Console.ResetColor();
+
+                            continue;
+                        }
+
+                        Console.Write("Импортировать информацию об организации в в файл xml? (да/нет) ");
+
+                        if (Console.ReadLine().ToUpper() == "ДА") {
+                            // Сериализуем организацию в xml-файл
+                            organization.xmlOrganizationSerializer(@"organization.xml");
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"Информация об организации записана в " +
+                                $"файл {Directory.GetCurrentDirectory()}\\organization.xml");
+                            Console.ResetColor();
+
+                            Console.ReadKey();
+                        }
+
+                        continue;
+
+                    case 11: // выбран пункт "Экспорт информации в json"
+
+                        // Если организация пуста
+                        if (organization.Name == null) {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Организация пуста!");
+                            Console.ReadKey();
+
+                            Console.ResetColor();
+
+                            continue;
+                        }
+
+                        Console.Write("Импортировать информацию об организации в в файл json? (да/нет) ");
+
+                        if (Console.ReadLine().ToUpper() == "ДА") {
+                            // Сериализуем организацию в xml-файл
+                            organization.jsonOrganizationSerializer(@"organization.json");
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"Информация об организации записана в " +
+                                $"файл {Directory.GetCurrentDirectory()}\\organization.json");
+                            Console.ResetColor();
+
+                            Console.ReadKey();
+                        }
 
                         continue;
 
