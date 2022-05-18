@@ -213,8 +213,8 @@ namespace Organization {
 
                     //var tmp = lstEmp.OrderBy(a => (a.Dep.Name, a.Age, a.Post.Salary));  
 
-                    //return sortedByDepAgeSal;
-                    return new List<Employee>();
+                    return sortedByDepAgeSal;
+                    //return new List<Employee>();
 
             }
 
