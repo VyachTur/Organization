@@ -207,14 +207,14 @@ namespace Organization {
 
                 case FIELDSORT.DEP_AGE_SALARY:
                     // Сортируем сотрудников в рамках одного отдела по возрасту и зарплате
-                    //List<Employee> sortedByDepAgeSal =
+                    List<Employee> sortedByDepAgeSal =
                     //        //lstEmp.OrderBy(d => d.Dep.Name).ThenBy(a => a.Age).ThenBy(s => s.Post.Salary).ToList();
                     lstEmp.OrderBy(a => (a.Dep.Name, a.Age, a.Post.Salary)).ToList(); // передаем кортеж
 
                     //var tmp = lstEmp.OrderBy(a => (a.Dep.Name, a.Age, a.Post.Salary));  
 
-                    //return sortedByDepAgeSal;
-                    return new List<Employee>();
+                    return sortedByDepAgeSal;
+                    //return new List<Employee>();
 
             }
 
