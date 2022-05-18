@@ -2,11 +2,11 @@
 
 namespace Organization {
 
-    [Serializable]
-    /// <summary>
-    /// Структура реализующая проект
-    /// </summary>
-    public struct Project {
+	[Serializable]
+	/// <summary>
+	/// Структура реализующая проект
+	/// </summary>
+	public struct Project {
 
         #region Constructors
 

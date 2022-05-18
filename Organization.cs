@@ -18,11 +18,11 @@ namespace Organization {
         DEP_AGE_SALARY  // для сортировки по возрасту и зарплате в рамках одного департамента
     }
 
-    [Serializable]
-    /// <summary>
-    /// Класс реализующий организацию (ОСНОВНОЙ КЛАСС!)
-    /// </summary>
-    public class Organization {
+	[Serializable]
+	/// <summary>
+	/// Класс реализующий организацию (ОСНОВНОЙ КЛАСС!)
+	/// </summary>
+	public class Organization {
 
         #region Constructors
 
@@ -200,16 +200,21 @@ namespace Organization {
                 case FIELDSORT.AGE_SALARY:
                     // Сортируем всех сотрудников по возрасту и зарплате
                     List<Employee> sortedByAgeSal =
-                            lstEmp.OrderBy(a => a.Age).ThenBy(s => s.Post.Salary).ToList();
+                            //lstEmp.OrderBy(a => a.Age).ThenBy(s => s.Post.Salary).ToList();
+                            lstEmp.OrderBy(a => (a.Age, a.Post.Salary)).ToList();
 
                     return sortedByAgeSal;
 
                 case FIELDSORT.DEP_AGE_SALARY:
                     // Сортируем сотрудников в рамках одного отдела по возрасту и зарплате
-                    List<Employee> sortedByDepAgeSal =
-                            lstEmp.OrderBy(d => d.Dep.Name).ThenBy(a => a.Age).ThenBy(s => s.Post.Salary).ToList();
+                    //List<Employee> sortedByDepAgeSal =
+                    //        //lstEmp.OrderBy(d => d.Dep.Name).ThenBy(a => a.Age).ThenBy(s => s.Post.Salary).ToList();
+                    lstEmp.OrderBy(a => (a.Dep.Name, a.Age, a.Post.Salary)).ToList(); // передаем кортеж
 
-                    return sortedByDepAgeSal;
+                    //var tmp = lstEmp.OrderBy(a => (a.Dep.Name, a.Age, a.Post.Salary));  
+
+                    //return sortedByDepAgeSal;
+                    return new List<Employee>();
 
             }
 
@@ -401,7 +406,6 @@ namespace Organization {
         /// </summary>
         /// /// <param name="path">Путь к файлу импорта (json)</param>
         public void jsonOrganizationSerializer(string path) {
-
             JObject joOrg = new JObject();  // организация
             joOrg["name"] = this.Name;
 

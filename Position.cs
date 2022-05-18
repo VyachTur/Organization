@@ -2,11 +2,11 @@
 
 namespace Organization {
 
-    [Serializable]
-    /// <summary>
-    /// Структура реализующая должность в департаменте
-    /// </summary>
-    public struct Position {
+	[Serializable]
+	/// <summary>
+	/// Структура реализующая должность в департаменте
+	/// </summary>
+	public struct Position {
 
         #region Constructors
 

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace Organization {
 
 
-    [Serializable]
-    /// <summary>
-    /// Класс реализующий департамент (отдел) организации
-    /// </summary>
-    public class Department {
+	[Serializable]
+	/// <summary>
+	/// Класс реализующий департамент (отдел) организации
+	/// </summary>
+	public class Department {
         const int MaxEmployeesInDep = 1_000_000;    // максимальное количество сотрудников в одном департаменте (отделе)
 
         #region Constructors

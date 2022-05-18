@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Organization {
 
-    [Serializable]
-    /// <summary>
-    /// Класс реализующий сотрудника департамента
-    /// </summary>
-    public class Employee {
+	[Serializable]
+	/// <summary>
+	/// Класс реализующий сотрудника департамента
+	/// </summary>
+	public class Employee {
 
         #region Constructors
 
